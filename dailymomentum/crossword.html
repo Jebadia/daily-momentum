@@ -9,31 +9,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-.crossword-wrap { display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap; justify-content:center; width:100%; }
-.grid-area { display:flex; flex-direction:column; align-items:center; }
-.cw-grid { display:inline-grid; grid-template-columns:repeat(5,42px); grid-template-rows:repeat(5,42px); gap:0; border:2px solid rgba(139,168,136,0.4); border-radius:4px; overflow:hidden; margin-bottom:1rem; }
-.cw-cell { width:42px; height:42px; background:var(--bg); position:relative; box-sizing:border-box; border-right:1px solid rgba(232,228,220,0.08); border-bottom:1px solid rgba(232,228,220,0.08); cursor:pointer; user-select:none; }
-.cw-cell:nth-child(5n) { border-right:none; }
-.cw-cell.black { background:#000; cursor:default; border-color:#000; }
-.cw-cell.thick-right { border-right:2px solid rgba(139,168,136,0.35); }
-.cw-cell.thick-bottom { border-bottom:2px solid rgba(139,168,136,0.35); }
-.cw-cell.selected { background:rgba(139,168,136,0.28); }
-.cw-cell.active-word { background:rgba(139,168,136,0.1); }
-.cw-letter { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'Jost',sans-serif; font-size:1rem; font-weight:400; color:var(--ink); text-transform:uppercase; pointer-events:none; }
-.cw-num { position:absolute; top:2px; left:3px; font-size:0.42rem; color:var(--accent); font-family:'Jost',sans-serif; line-height:1; pointer-events:none; z-index:1; }
-.clues-area { min-width:200px; max-width:240px; }
-.clue-section { margin-bottom:1.2rem; }
-.clue-dir { font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent); margin-bottom:0.6rem; font-family:'Jost',sans-serif; }
-.clue-item { font-size:0.75rem; font-weight:300; color:var(--muted); line-height:1.5; margin-bottom:0.3rem; cursor:pointer; padding:0.15rem 0.4rem; border-radius:3px; transition:color 0.15s, background 0.15s; font-family:'Jost',sans-serif; }
-.clue-item:hover { color:var(--ink); }
-.clue-item.active { color:var(--accent); background:rgba(139,168,136,0.08); }
-.cw-actions { display:flex; gap:0.6rem; }
-.action-btn { background:none; border:1px solid var(--rule); color:var(--muted); font-family:'Jost',sans-serif; font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; padding:0.4rem 0.9rem; border-radius:2rem; cursor:pointer; transition:all 0.2s; }
-.action-btn:hover { border-color:var(--accent-dim); color:var(--ink); }
-.status-msg { font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-top:0.6rem; min-height:1.2em; text-align:center; font-family:'Jost',sans-serif; }
-.status-msg.win { color:var(--accent); }
-/* hidden input to capture keyboard */
-#cwCapture { position:fixed; opacity:0; pointer-events:none; width:1px; height:1px; top:0; left:0; }
+.crossword-wrap{display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap;justify-content:center;width:100%}
+.grid-area{display:flex;flex-direction:column;align-items:center}
+.cw-grid{display:inline-grid;grid-template-columns:repeat(5,44px);grid-template-rows:repeat(5,44px);gap:0;border:2px solid rgba(139,168,136,0.4);border-radius:4px;overflow:hidden;margin-bottom:1rem}
+.cw-cell{width:44px;height:44px;background:var(--bg);position:relative;box-sizing:border-box;border-right:1px solid rgba(232,228,220,0.08);border-bottom:1px solid rgba(232,228,220,0.08);cursor:pointer;user-select:none}
+.cw-cell:nth-child(5n){border-right:none}
+.cw-cell.black{background:#000;cursor:default;border-color:#000}
+.cw-cell.thick-r{border-right:2px solid rgba(139,168,136,0.3)}
+.cw-cell.thick-b{border-bottom:2px solid rgba(139,168,136,0.3)}
+.cw-cell.selected{background:rgba(139,168,136,0.28)}
+.cw-cell.hilite{background:rgba(139,168,136,0.1)}
+.cw-letter{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif;font-size:1.05rem;font-weight:400;color:var(--ink);text-transform:uppercase;pointer-events:none}
+.cw-num{position:absolute;top:2px;left:3px;font-size:0.42rem;color:var(--accent);font-family:'Jost',sans-serif;line-height:1;pointer-events:none;z-index:1}
+.clues-area{min-width:200px;max-width:240px}
+.clue-section{margin-bottom:1.2rem}
+.clue-dir{font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:0.6rem;font-family:'Jost',sans-serif}
+.clue-item{font-size:0.75rem;font-weight:300;color:var(--muted);line-height:1.5;margin-bottom:0.3rem;cursor:pointer;padding:0.15rem 0.4rem;border-radius:3px;transition:color 0.15s,background 0.15s;font-family:'Jost',sans-serif}
+.clue-item:hover{color:var(--ink)}
+.clue-item.active{color:var(--accent);background:rgba(139,168,136,0.08)}
+.cw-actions{display:flex;gap:0.6rem}
+.action-btn{background:none;border:1px solid var(--rule);color:var(--muted);font-family:'Jost',sans-serif;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.4rem 0.9rem;border-radius:2rem;cursor:pointer;transition:all 0.2s}
+.action-btn:hover{border-color:var(--accent-dim);color:var(--ink)}
+.status-msg{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:0.6rem;min-height:1.2em;text-align:center;font-family:'Jost',sans-serif}
+.status-msg.win{color:var(--accent)}
+#cwCap{position:fixed;opacity:0;pointer-events:none;width:1px;height:1px;top:0;left:0}
 </style>
 </head>
 <body>
@@ -50,8 +49,8 @@
   <a href="sudoku.html" class="nav-link">Sudoku</a>
 </nav>
 <div class="divider"></div>
-<main style="justify-content:flex-start;padding-top:0.5rem;max-width:900px;">
-  <div class="day-nav" style="margin-bottom:1.2rem;">
+<main style="justify-content:flex-start;padding-top:0.5rem;max-width:900px">
+  <div class="day-nav" style="margin-bottom:1.2rem">
     <button class="day-nav-btn" id="prevBtn" onclick="changeDay(-1)">&#8592;</button>
     <span class="date-label" id="dateLabel"></span>
     <button class="day-nav-btn" id="nextBtn" onclick="changeDay(1)">&#8594;</button>
@@ -67,19 +66,12 @@
       <p class="status-msg" id="statusMsg"></p>
     </div>
     <div class="clues-area">
-      <div class="clue-section">
-        <div class="clue-dir">Across</div>
-        <div id="acrossClues"></div>
-      </div>
-      <div class="clue-section">
-        <div class="clue-dir">Down</div>
-        <div id="downClues"></div>
-      </div>
+      <div class="clue-section"><div class="clue-dir">Across</div><div id="acrossClues"></div></div>
+      <div class="clue-section"><div class="clue-dir">Down</div><div id="downClues"></div></div>
     </div>
   </div>
 </main>
-<!-- hidden input to capture typing without focus loops -->
-<input id="cwCapture" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+<input id="cwCap" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
 <footer>
   <a href="https://www.linkedin.com/in/jebbreese/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -91,404 +83,495 @@
   Buy me a Dutch Bros
 </a>
 <script>
-const puzzles = [
-  {
-    grid:["PLANS","L#A#E","ALIBI","N#T#V","SLEEP"],
-    across:{1:"Make arrangements",3:"Excuse used to avoid blame",5:"Rest the mind"},
-    down:{1:"Flat surface or aircraft",2:"Not old",3:"Slimy garden creature",4:"Happen"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["BREAD","R#O#R","ANVIL","V#C#E","ETUDE"],
-    across:{1:"Baked loaf",3:"Heavy iron block",5:"Musical practice piece"},
-    down:{1:"Courageous",2:"Vocal range above tenor",3:"Illegal",4:"Not dry"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["CHESS","H#A#T","ELOPE","S#P#A","STERN"],
-    across:{1:"Board game of strategy",3:"Run away to marry",5:"Rear of a ship"},
-    down:{1:"Verify correctness",2:"Narrow opening",3:"Grow older",4:"Opposite of mild"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["DRAFT","R#A#L","IDEAL","F#M#O","TAPIR"],
-    across:{1:"Early version of writing",3:"Perfect standard",5:"Rainforest mammal with a snout"},
-    down:{1:"Absorb a liquid",2:"Not awake",3:"Give a speech",4:"Solo"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["GLOBE","L#L#O","OPTIC","B#W#N","EMEND"],
-    across:{1:"Spherical map of Earth",3:"Relating to vision",5:"Correct a text"},
-    down:{1:"Radiant brightness",2:"Legume climber",3:"Grease",4:"Connector word"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["FROST","R#V#E","OVOID","S#N#X","TINGE"],
-    across:{1:"Winter coating on surfaces",3:"Egg-shaped",5:"Slight trace of color"},
-    down:{1:"Frozen precipitation",2:"Brief sleep",3:"Perform for an audience",4:"More than one"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["SWAMP","W#A#H","ABASE","M#S#A","PYRES"],
-    across:{1:"Wetland area",3:"To humiliate or degrade",5:"Funeral fires"},
-    down:{1:"Monarch's stick",2:"Pertaining to water",3:"Single unit",4:"Celestial body"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["FLUTE","L#U#A","USHER","T#E#G","EVERY"],
-    across:{1:"Wind instrument",3:"Theater guide",5:"Each and all"},
-    down:{1:"Not pass an exam",2:"Below average",3:"Possessive of it",4:"About a year old"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["CRISP","R#L#E","ILEUM","S#M#E","PENNY"],
-    across:{1:"Firm and dry",3:"Part of the small intestine",5:"One cent coin"},
-    down:{1:"A small stream",2:"Stable and secure",3:"A unit of electrical current",4:"Myself"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["SCONE","C#V#A","OVARY","N#N#V","ELEGY"],
-    across:{1:"Baked teatime treat",3:"Female reproductive organ",5:"A mournful poem"},
-    down:{1:"Stretch of water",2:"Relating to the nose",3:"Relative of bison",4:"A greeting"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["TROVE","R#O#I","OPIUM","V#E#L","EMITS"],
-    across:{1:"Hidden store of valuables",3:"Narcotic plant extract",5:"Gives off light or gas"},
-    down:{1:"Three",2:"Verbal opposite of night",3:"Flat land between hills",4:"Sticky substance from trees"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
-  },
-  {
-    grid:["KARMA","A#A#O","REIGN","M#G#E","ASIDE"],
-    across:{1:"Cosmic cause and effect",3:"Period of a ruler's power",5:"To one side"},
-    down:{1:"Snap or crackle",2:"Relating to the arm",3:"Opposite of she",4:"Not odd"},
-    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
-    downNums:{1:[0,0],2:[0,2],3:[2,2],4:[0,4]}
+// ── clue dictionary ──────────────────────────────────────────────────────────
+const CLUES={
+"ABIDE":"Put up with","ABODE":"Home or dwelling","ABORT":"Cancel a mission","ABOUT":"Approximately","ABOVE":"Higher than",
+"ACORN":"Oak tree seed","ACRES":"Units of land","ACTED":"Performed on stage","ACUTE":"Sharp or severe","ADAPT":"Adjust to change",
+"ADDED":"Put together","ADEPT":"Highly skilled","ADMIT":"Confess or allow in","ADOBE":"Sun-dried brick","ADOPT":"Take as one's own",
+"ADORE":"Love deeply","ADULT":"Fully grown person","AFTER":"Following in time","AGAIN":"One more time","AGILE":"Quick and nimble",
+"AGONY":"Extreme suffering","AGREE":"Come to terms","AHEAD":"In front","ALARM":"Warning signal","ALBUM":"Collection of music",
+"ALERT":"Quick to notice","ALIKE":"Similar","ALIVE":"Living and breathing","ALLAY":"Calm or reduce","ALLEY":"Narrow back street",
+"ALLOT":"Assign a share","ALLOW":"Permit","ALLOY":"Mixed metal","ALOFT":"High in the air","ALONE":"Without others",
+"ALONG":"Moving forward","ALOOF":"Distant and cold","ALOUD":"Spoken out loud","ALTAR":"Sacred table","ALTER":"Change slightly",
+"ANGEL":"Heavenly being","ANGER":"Strong displeasure","ANGLE":"Corner measurement","ANGRY":"Feeling rage","ANVIL":"Blacksmith's block",
+"APART":"Separated","APPLE":"Red or green fruit","APRON":"Kitchen garment","ARBOR":"Garden archway","ARDOR":"Passionate enthusiasm",
+"ARENA":"Sports venue","ARGUE":"Dispute verbally","ARISE":"Come up or appear","ARMOR":"Protective covering","AROMA":"Pleasant smell",
+"ARSON":"Setting fires illegally","ASIDE":"To one side","ASKED":"Made a request","ASSET":"Valuable resource",
+"ATONE":"Make amends","ATTIC":"Room under the roof","AUDIT":"Official financial check","AVAIL":"Be of use",
+"AVOID":"Stay away from","AWAKE":"Not sleeping","AWARD":"Prize given","AWARE":"Having knowledge","AWFUL":"Very bad",
+"BACON":"Cured pork strips","BADGE":"Identification pin","BADLY":"Poorly","BAGEL":"Ring-shaped bread roll",
+"BARGE":"Flat-bottomed boat","BARON":"Wealthy nobleman","BASIC":"Fundamental","BASIL":"Herb used in cooking",
+"BASIS":"Foundation","BATCH":"Group processed together","BATHE":"Wash the body","BEACH":"Sandy shoreline",
+"BEARD":"Facial hair","BEAST":"Wild animal","BEGAN":"Started","BEGIN":"Start","BEING":"Existing","BELOW":"Under","BENCH":"Long seat",
+"BIBLE":"Sacred text","BIRCH":"White-barked tree","BISON":"Large plains animal","BLAND":"Without flavor","BLAST":"Explosion",
+"BLEND":"Mix together","BLISS":"Perfect happiness","BLOCK":"Solid chunk","BLOND":"Light-colored hair","BLOOD":"Red fluid in veins",
+"BLOWN":"Carried by wind","BLUNT":"Not sharp or direct","BLUSH":"Turn red with embarrassment","BOARD":"Flat piece of wood",
+"BOAST":"Brag proudly","BONUS":"Extra reward","BOOST":"Increase or lift","BOOTH":"Small enclosed stall","BOTCH":"Do badly",
+"BOUND":"Heading toward","BRAIN":"Thinking organ","BRAKE":"Slow down device","BRAVE":"Showing courage","BREAD":"Baked dough loaf",
+"BREED":"Type of animal","BRIDE":"Woman getting married","BRIEF":"Short in time","BRINE":"Salty water",
+"BRISK":"Quick and energetic","BROTH":"Thin soup","BROWN":"Earth-toned color","BRUNT":"Full force of impact",
+"BRUSH":"Tool for painting or cleaning","BRUTE":"Savage creature","BUDGE":"Move slightly","BUILD":"Construct","BUILT":"Constructed",
+"BULGE":"Swell outward","BURST":"Break open suddenly","CABIN":"Small wooden shelter","CANDY":"Sweet treat",
+"CARGO":"Goods transported","CARVE":"Cut into shape","CAUSE":"Reason for an effect","CEASE":"Stop completely",
+"CEDAR":"Aromatic wood tree","CHAIN":"Linked metal rings","CHAIR":"Seat with a back","CHALK":"White writing stick",
+"CHAOS":"Complete disorder","CHARM":"Delight or amulet","CHART":"Visual data display","CHASE":"Pursue rapidly",
+"CHEAP":"Low in cost","CHEAT":"Act dishonestly","CHECK":"Verify or restrain","CHEEK":"Side of the face",
+"CHESS":"Strategy board game","CHEST":"Torso or storage box","CHIEF":"Leader","CHILD":"Young person","CHILL":"Cool temperature",
+"CHINA":"Fine porcelain","CHORD":"Musical notes together","CIDER":"Apple drink","CIVIC":"Relating to a city",
+"CIVIL":"Polite and courteous","CLAIM":"Assert ownership","CLAMP":"Fastening device","CLEAN":"Free from dirt",
+"CLEAR":"Transparent and obvious","CLERK":"Office worker","CLICK":"Sharp short sound","CLIFF":"Steep rock face",
+"CLIMB":"Go up","CLING":"Hold tightly","CLOSE":"Near or to shut","CLOTH":"Woven fabric","CLOUD":"Water vapor in the sky",
+"CLOWN":"Comic performer","COACH":"Train or instruct","COMET":"Icy space object","COMIC":"Funny or comedy book",
+"CORAL":"Ocean reef material","COURT":"Play area or legal venue","COVER":"Place over something","CRACK":"Narrow break",
+"CRAFT":"Skill or make by hand","CRANE":"Tall lifting machine","CRAWL":"Move on hands and knees","CREAM":"Fatty milk layer",
+"CREEK":"Small stream","CREEP":"Move stealthily","CREST":"Top of a wave or hill","CRIME":"Illegal act","CRISP":"Firm and dry",
+"CROWD":"Large group of people","CROWN":"Royal headpiece","CRUEL":"Causing pain deliberately","CRUSH":"Compress forcefully",
+"CRUST":"Outer hard layer","CUBIC":"Three-dimensional square","CURLY":"Having spiraling curves","CURRY":"Spiced dish",
+"CURVE":"Rounded line","CYCLE":"Repeated series or bicycle","DAILY":"Every day","DAIRY":"Milk products","DAISY":"White and yellow flower",
+"DANCE":"Move rhythmically to music","DANDY":"Excellent fellow","DENSE":"Tightly packed",
+"DEPOT":"Storage or transport hub","DEPTH":"Distance downward","DERBY":"Horse race or hat",
+"DIVAN":"Low couch without arms","DODGE":"Avoid quickly","DOUBT":"Feel uncertain","DRAFT":"Early version or air current",
+"DRAIN":"Remove liquid","DRAMA":"Exciting events or theater","DRAPE":"Hang loosely","DREAD":"Intense fear",
+"DREAM":"Images during sleep","DRESS":"Garment or to clothe","DRIFT":"Float without direction","DRINK":"Consume liquid",
+"DRIVE":"Operate a vehicle","DROWN":"Die in water","EAGLE":"Large bird of prey","EARLY":"Before expected time",
+"EARTH":"Our planet or soil","EIGHT":"Number after seven","ELBOW":"Arm joint","ELDER":"Older person or tree",
+"ELECT":"Choose by voting","ELITE":"Best of a group","EMBER":"Glowing coal fragment","EMPTY":"Containing nothing",
+"ENACT":"Make into law","ENEMY":"Opponent","ENJOY":"Take pleasure in","ENTER":"Go into","ENTRY":"Way in or submitted item",
+"EPOCH":"Period of time","EQUIP":"Provide with tools","ESSAY":"Short written piece","EVENT":"Something that happens",
+"EVERY":"Each one","EXACT":"Perfectly accurate","EXERT":"Apply effort","EXILE":"Banished from home",
+"EXIST":"Have being","EXTRA":"More than usual","FABLE":"Moral story","FAINT":"Lose consciousness or dim",
+"FAITH":"Complete trust","FANCY":"Elaborate or desire","FATAL":"Causing death","FAUNA":"Animal life of a region",
+"FEAST":"Large celebratory meal","FENCE":"Barrier around land","FERRY":"Transport across water","FETCH":"Go and get",
+"FEVER":"High body temperature","FIBER":"Thread-like material","FIERY":"Intensely hot","FIGHT":"Physical struggle",
+"FINCH":"Small seed-eating bird","FIRST":"Before all others","FIXED":"Repaired or not moving","FLAIR":"Natural talent",
+"FLARE":"Burst of light","FLEET":"Group of ships or swift","FLESH":"Soft body tissue","FLINT":"Spark-producing stone",
+"FLORA":"Plant life of a region","FLUTE":"Wind instrument","FORGE":"Shape metal with heat","FORTE":"Strong point",
+"FORUM":"Place for discussion","FOUND":"Discovered or established","FRANK":"Honest and direct","FREAK":"Unusual occurrence",
+"FRESH":"New and clean","FRONT":"Forward face","FROST":"Frozen moisture layer","FUNGI":"Mushrooms and mold",
+"FUNNY":"Causing laughter","GAUGE":"Measure","GAVEL":"Judge's hammer","GIVEN":"Specified or donated",
+"GLAND":"Organ that secretes","GLARE":"Blinding light or stare","GLASS":"Transparent hard material",
+"GLAZE":"Glossy coating","GLEAM":"Bright flash of light","GLEAN":"Gather gradually","GLIDE":"Move smoothly",
+"GLOBE":"Spherical map of Earth","GLOOM":"Darkness or sadness","GLOSS":"Shiny surface","GLOVE":"Hand covering",
+"GOING":"Moving along","GRACE":"Elegant movement or blessing","GRADE":"Level or rank","GRAIN":"Seed of a cereal crop",
+"GRAND":"Impressive","GRANT":"Give formally or permit","GRASP":"Hold firmly or understand","GRASS":"Green ground cover",
+"GRATE":"Shred food or metal frame","GRAVY":"Meat juice sauce","GRAZE":"Feed on grass or slight scrape",
+"GREED":"Excessive desire","GREET":"Welcome someone","GRIEF":"Deep sorrow","GRILL":"Cook on bars over heat",
+"GRIME":"Ingrained dirt","GROAN":"Low moan of pain","GROVE":"Small group of trees","GROWL":"Low threatening sound",
+"GUILE":"Clever deception","GUISE":"Outward appearance","GUSTO":"Enthusiastic enjoyment","HANDS":"End parts of arms",
+"HANDY":"Useful and convenient","HARSH":"Unpleasantly rough","HASTY":"Done too quickly","HAVEN":"Safe place",
+"HAZEL":"Brown color or nut tree","HEAVY":"Of great weight","HEDGE":"Row of bushes","HEIST":"Robbery","HENCE":"Therefore",
+"HERON":"Long-legged wading bird","HINGE":"Pivot joint for doors","HOARD":"Hidden store","HOBBY":"Leisure activity",
+"HOLLY":"Prickly Christmas plant","HONEY":"Sweet bee product","HONOR":"Great respect","HOTEL":"Accommodation building",
+"HOUND":"Hunting dog","HOUSE":"Building to live in","HUMAN":"Person","HUMID":"Damp and warm","HURRY":"Move quickly",
+"HUSKY":"Stocky or sled dog","HYENA":"Laughing African animal","IDEAL":"Perfect standard","IMAGE":"Visual representation",
+"IRATE":"Extremely angry","IVORY":"Creamy white material","JEWEL":"Precious gemstone","JUDGE":"Decide or court official",
+"JUICE":"Liquid from fruit","JUMPY":"Nervous and anxious","KARMA":"Cause and effect force","KAYAK":"Narrow paddled boat",
+"KNACK":"Natural skill","KNAVE":"Dishonest person","KNEEL":"Get on one's knees","KNIFE":"Cutting blade",
+"KNOCK":"Strike a surface","KNOWN":"Recognized","LABEL":"Identifying tag","LANCE":"Long spear","LANKY":"Tall and thin",
+"LARGE":"Big in size","LATCH":"Fastening catch","LATER":"After this time","LAUGH":"Express amusement","LAYER":"Single thickness",
+"LEARN":"Gain knowledge","LEAVE":"Go away or allow","LEDGE":"Narrow horizontal shelf","LEGAL":"Permitted by law",
+"LEMON":"Yellow sour citrus","LEVEL":"Flat or equal height","LIGHT":"Illumination or not heavy",
+"LILAC":"Light purple or flowering shrub","LINEN":"Fabric from flax","LIVER":"Body detox organ",
+"LOCAL":"Nearby","LODGE":"Small country house","LOGIC":"Reasoned thinking","LOTUS":"Water lily","LOVER":"Romantic partner",
+"LUCID":"Clear and easily understood","LUCKY":"Fortunate","LUNAR":"Relating to the moon","LYRIC":"Words of a song",
+"MAGIC":"Mysterious power","MAJOR":"Greater in importance","MANOR":"Country estate","MAPLE":"Sugar-producing tree",
+"MARCH":"Walk in step or third month","MARSH":"Wetland area","MATCH":"Contest or be equal","MAXIM":"Short wise saying",
+"MEDIA":"Means of communication","MERCY":"Compassionate forgiveness","MERGE":"Combine into one",
+"MERIT":"Deserve or worthiness","METAL":"Hard mineral material","MIGHT":"Power or possibility",
+"MIRTH":"Cheerful amusement","MIXED":"Combined together","MODEL":"Example or small replica","MOIST":"Slightly wet",
+"MONEY":"Currency","MOOSE":"Large antlered deer","MORAL":"Right and wrong lesson","MOURN":"Feel grief",
+"MOUSE":"Small furry rodent","MOUTH":"Opening for speech and food","MULCH":"Protective ground covering",
+"MURAL":"Wall painting","MURKY":"Dark and gloomy","MUSIC":"Organized sound","NAIVE":"Lacking experience",
+"NIGHT":"Dark period after sunset","NOBLE":"Having high moral qualities","NOISE":"Unwanted sound",
+"NORTH":"Direction toward the pole","NOTCH":"V-shaped cut","NOVEL":"New or long fictional book",
+"NUDGE":"Gentle push","NURSE":"Medical caregiver","OCEAN":"Vast body of salt water","OLIVE":"Small oil-rich fruit",
+"OPERA":"Sung theatrical drama","ORBIT":"Path around a planet","ORDER":"Command or arrangement",
+"ORGAN":"Body part or musical instrument","OTTER":"Playful aquatic mammal","OUNCE":"Small unit of weight",
+"OUTER":"On the outside","OVOID":"Egg-shaped","OZONE":"Atmospheric gas layer","PAINT":"Color applied to surfaces",
+"PANDA":"Black and white bear","PAPER":"Writing material","PATCH":"Small piece to repair","PAUSE":"Temporary stop",
+"PEACE":"Absence of conflict","PEACH":"Fuzzy orange fruit","PEARL":"Gem from an oyster","PEDAL":"Foot-operated lever",
+"PERCH":"Bird's resting place or freshwater fish","PERKY":"Lively and cheerful","PETAL":"Flower's colorful leaf",
+"PHASE":"Stage of development","PHONE":"Communication device","PHOTO":"Captured image","PIANO":"Keyboard instrument",
+"PIECE":"Part of a whole","PILOT":"Aircraft controller","PITCH":"Throw or musical tone","PIXEL":"Tiny screen dot",
+"PLACE":"Location or put somewhere","PLAIN":"Simple or flat landscape","PLANK":"Thick flat board",
+"PLANT":"Living organism or place firmly","PLATE":"Flat dish","PLEAD":"Make an emotional appeal",
+"PLEAT":"Fold in fabric","PLUMB":"Perfectly vertical","PLUME":"Decorative feather","POINT":"Sharp tip or purpose",
+"POLAR":"Relating to the poles","POUND":"Hit hard or unit of weight","POWER":"Ability to act or electricity",
+"PRESS":"Apply pressure or the media","PRICE":"Cost of something","PRIDE":"Satisfaction in achievement",
+"PRIME":"Best quality or first in importance","PRINT":"Reproduce text or images","PRISM":"Glass that splits light",
+"PROBE":"Investigate or exploration tool","PRONE":"Likely to or lying face down","PROSE":"Ordinary written language",
+"PROUD":"Feeling deep satisfaction","PROVE":"Demonstrate truth","PRUNE":"Dried plum or trim back",
+"PULSE":"Heartbeat or legume","PUNCH":"Strike with fist or fruit drink","PUPIL":"Student or eye's opening",
+"PURGE":"Remove unwanted elements","QUALM":"Uneasy feeling of doubt","QUEEN":"Female monarch","QUERY":"Question",
+"QUEST":"Search or pursuit","QUEUE":"Line of waiting people","QUICK":"Fast","QUIET":"Making little noise",
+"QUOTA":"Fixed share or limit","QUOTE":"Repeat words exactly","RAINY":"Wet weather","RANCH":"Large livestock farm",
+"RANGE":"Variety or distance covered","RAPID":"Very fast","RAVEN":"Large black bird","REACH":"Extend toward",
+"REACT":"Respond to stimulus","REBEL":"Resist authority","REIGN":"Rule as monarch","RELAX":"Become less tense",
+"RELAY":"Pass on a message or race type","REPAY":"Pay back","REVEL":"Enjoy greatly","RISKY":"Involving danger",
+"RIVAL":"Competitor","RIVER":"Large flowing water body","ROAST":"Cook in an oven","ROBIN":"Red-breasted bird",
+"ROCKY":"Full of rocks or unsteady","ROGUE":"Dishonest person","ROUGE":"Red cosmetic color","ROUGH":"Not smooth",
+"ROUND":"Circular or one complete cycle","ROWDY":"Noisy and disorderly","ROYAL":"Relating to royalty",
+"RULER":"Measuring stick or one who governs","SADLY":"In a sorrowful way","SAINT":"Holy person",
+"SALTY":"Tasting of salt","SANDY":"Covered in sand or light brown","SAUCE":"Liquid food accompaniment",
+"SAVVY":"Practical knowledge","SCALD":"Burn with hot liquid","SCALP":"Skin on top of head","SCARY":"Frightening",
+"SCENE":"Setting or view","SCONE":"Baked teatime treat","SCOOP":"Spoon-like tool or news exclusive",
+"SCOPE":"Range or aim","SCORE":"Points earned","SEIZE":"Take forcibly","SENSE":"Perceive or faculty",
+"SERVE":"Work for or deliver a ball","SHADE":"Partial darkness","SHAKE":"Move rapidly back and forth",
+"SHAME":"Feeling of disgrace","SHARE":"Divide between others","SHARK":"Ocean predator","SHARP":"Having a keen edge",
+"SHEEN":"Soft luster","SHELF":"Horizontal storage surface","SHELL":"Hard outer casing",
+"SHIFT":"Change position or work period","SHINE":"Give off light","SHIRT":"Upper body garment",
+"SHOCK":"Sudden disturbance","SHORE":"Land at water's edge","SHORT":"Not long or tall","SHOUT":"Call out loudly",
+"SHOWN":"Displayed","SHRUG":"Raise shoulders uncertainly","SIEGE":"Military blockade","SINCE":"From a past time until now",
+"SKILL":"Learned ability","SKULL":"Bony head structure","SLATE":"Dark grey rock or to criticize",
+"SLEEP":"Natural rest state","SLEET":"Frozen rain","SLICK":"Smooth and glossy","SLIDE":"Move smoothly down",
+"SLIME":"Thick slippery substance","SLOTH":"Slow-moving mammal or laziness","SMALL":"Little in size",
+"SMASH":"Break violently","SMELL":"Sense through the nose","SMILE":"Facial expression of happiness",
+"SNACK":"Small quick meal","SNAIL":"Slow mollusk with shell","SNAKE":"Legless reptile","SNARE":"Trap or drum type",
+"SNEAK":"Move secretly","SNORE":"Breathe noisily in sleep","SOLAR":"Relating to the sun","SOLID":"Hard and firm",
+"SOLVE":"Find the answer","SORRY":"Feeling regret","SOUND":"Vibration heard by ears","SOUTH":"Direction opposite of north",
+"SPACE":"Outer universe or gap","SPARE":"Extra or save from harm","SPARK":"Small fiery particle","SPEAK":"Talk",
+"SPEED":"Rate of movement","SPEND":"Use money","SPICE":"Aromatic flavoring","SPINE":"Backbone",
+"SPITE":"Desire to hurt","SPLIT":"Divide into parts","STACK":"Pile things up","STAGE":"Platform or phase",
+"STAIN":"Mark that is hard to remove","STAKE":"Pointed post or at risk","STALE":"No longer fresh",
+"STALL":"Small market booth or delay","STAMP":"Postage label or mark with a tool","STAND":"Be upright or platform",
+"STARK":"Bare and harsh","START":"Begin","STASH":"Hidden supply","STEAM":"Water vapor","STEEL":"Strong iron alloy",
+"STEER":"Guide direction","STERN":"Rear of a ship or strict","STIFF":"Not flexible",
+"STILL":"Without movement or even now","STING":"Painful wound from insect","STOCK":"Supply kept ready",
+"STOOD":"Was upright","STORE":"Keep for later or shop","STORM":"Violent weather","STORY":"Narrative account",
+"STOUT":"Strong and thick","STOVE":"Cooking appliance","STRAW":"Dried stalks or drinking tube",
+"STUDY":"Learn carefully","STUMP":"Tree base or to perplex","STYLE":"Distinctive manner",
+"SUGAR":"Sweet crystalline substance","SURGE":"Sudden powerful rush","SWAMP":"Waterlogged land",
+"SWARM":"Large moving group","SWEAR":"Take an oath","SWEAT":"Perspire","SWEEP":"Clean with a brush",
+"SWEET":"Tasting of sugar","SWIFT":"Moving very fast","SWORD":"Long bladed weapon","TALON":"Bird of prey's claw",
+"TANGY":"Having a sharp taste","TAPIR":"Rainforest mammal with a snout","TEACH":"Pass on knowledge",
+"TERSE":"Brief and to the point","THEFT":"Act of stealing","THEME":"Central subject","THERE":"In that place",
+"THICK":"Not thin","THORN":"Sharp plant spike","THOSE":"The ones over there","THROW":"Propel through the air",
+"TIGER":"Large striped cat","TINGE":"Slight trace of color","TIRED":"In need of rest","TOAST":"Heated bread or raise a glass",
+"TODAY":"This present day","TOKEN":"Symbol or small coin","TONIC":"Restorative drink","TOPIC":"Subject of discussion",
+"TOUCH":"Make contact","TOUGH":"Strong or difficult","TOWEL":"Cloth for drying","TOWER":"Tall narrow structure",
+"TRACE":"Follow a path or faint mark","TRACK":"Path or monitor progress","TRADE":"Exchange goods",
+"TRAIL":"Path through nature","TRAIN":"Teach or rail vehicle","TRAIT":"Distinguishing quality",
+"TRASH":"Waste material","TRAWL":"Search widely","TREAD":"Walk on or step pattern","TREAT":"Something enjoyable",
+"TREND":"General direction of change","TRIAL":"Test or legal hearing","TRICK":"Deceptive act",
+"TROUT":"Freshwater fish","TROVE":"Valuable collection","TRUCE":"Agreement to stop fighting",
+"TRULY":"In a genuine way","TRUNK":"Tree's main stem or elephant's nose","TRUST":"Firm belief in reliability",
+"TRUTH":"What is real","TULIP":"Cup-shaped flower","TWICE":"Two times","ULTRA":"Extreme","UNCUT":"Not trimmed",
+"UNDUE":"Excessive","UNIFY":"Bring together","UNION":"Group joined together","UNITE":"Join as one",
+"UNITY":"State of being united","UNTIL":"Up to the time of","UPPER":"Higher in position",
+"UPSET":"Make unhappy or unexpected defeat","URBAN":"Relating to a city","UTTER":"Speak or absolute",
+"VAGUE":"Not clearly defined","VALID":"Acceptable or sound","VALOR":"Courage in battle",
+"VALVE":"Device controlling flow","VAPOR":"Gas from heated liquid","VENOM":"Poison from an animal",
+"VIGOR":"Physical strength and energy","VIRAL":"Spreading rapidly","VISTA":"Pleasing view",
+"VIVID":"Intensely bright or lively","VOCAL":"Relating to the voice","VOUCH":"Give assurance",
+"VOWEL":"A E I O or U","WACKY":"Funny in an odd way","WALTZ":"Three-beat dance","WASTE":"Use carelessly or rubbish",
+"WATCH":"Observe or wrist timepiece","WATER":"H2O","WEARY":"Tired and exhausted","WEDGE":"V-shaped object",
+"WEIRD":"Strange and unusual","WHALE":"Largest ocean mammal","WHEAT":"Grain used for bread",
+"WHILE":"During the time that","WHINE":"High-pitched complaint","WHIRL":"Spin rapidly",
+"WHISK":"Beat quickly or kitchen tool","WHITE":"Color of snow","WHOLE":"Complete or not divided",
+"WIELD":"Hold and use a weapon","WINCE":"Flinch in pain","WINDY":"With strong breeze",
+"WITCH":"Person said to practice magic","WITTY":"Cleverly humorous","WRATH":"Intense anger",
+"WRING":"Twist forcefully","WRONG":"Not correct","YEARN":"Long for deeply","YIELD":"Produce or give way",
+"YOUNG":"Not old","ZESTY":"Full of flavor and energy","ADAGE":"Traditional saying",
+"EVADE":"Escape from","ENSUE":"Follow as a result","ENACT":"Bring into effect",
+"TRIAD":"Group of three","SHAWL":"Wrap worn over shoulders",
+};
+
+const WORDS = Object.keys(CLUES);
+
+// ── seeded RNG ───────────────────────────────────────────────────────────────
+function SeededRNG(seed){
+  let s=seed|0;
+  return function(){s=Math.imul(1664525,s)+1013904223|0;return(s>>>0)/4294967296};
+}
+
+// ── position index ────────────────────────────────────────────────────────────
+const BY_POS=(()=>{
+  const idx=Array.from({length:5},()=>({}));
+  for(const w of WORDS){
+    for(let i=0;i<5;i++){
+      const ch=w[i];
+      if(!idx[i][ch])idx[i][ch]=[];
+      idx[i][ch].push(w);
+    }
   }
-];
+  return idx;
+})();
 
-function getDayOfYear(date) {
-  const start = new Date(date.getFullYear(), 0, 0);
-  return Math.floor((date - start) / 86400000);
-}
-function formatDate(date) {
-  return date.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric',year:'numeric'});
-}
+function pick(arr,rng){return arr[Math.floor(rng()*arr.length)]}
 
-const today = new Date(); today.setHours(0,0,0,0);
-let offset = 0;
-let puzz, userGrid, sel = null, dir = 'across';
+// ── puzzle generation ─────────────────────────────────────────────────────────
+// Grid pattern (X=black):
+//  A B C D E   row0=across1
+//  F X G X H   F,G,H = down connectors rows 1,3
+//  I J K L M   row2=across2
+//  N X O X P
+//  Q R S T U   row4=across3
+// Downs: col0=A,F,I,N,Q  col2=C,G,K,O,S  col4=E,H,M,P,U
+// Constraints: A1[0]=D1[0], A1[2]=D2[0], A1[4]=D3[0]
+//              A2[0]=D1[2], A2[2]=D2[2], A2[4]=D3[2]
+//              A3[0]=D1[4], A3[2]=D2[4], A3[4]=D3[4]
 
-// --- pure DOM update helpers (no grid rebuild) ---
-
-function cellEl(r, c) {
-  return document.querySelector(`.cw-cell[data-r="${r}"][data-c="${c}"]`);
-}
-
-function updateHighlights() {
-  document.querySelectorAll('.cw-cell').forEach(el => {
-    el.classList.remove('selected','active-word');
-  });
-  if (!sel) return;
-  const [sr, sc] = sel;
-  // highlight word cells
-  getWordCells(sr, sc, dir).forEach(([r,c]) => {
-    const el = cellEl(r,c);
-    if(el) el.classList.add('active-word');
-  });
-  // highlight selected cell on top
-  const selEl = cellEl(sr, sc);
-  if(selEl) { selEl.classList.remove('active-word'); selEl.classList.add('selected'); }
-  // highlight active clue
-  document.querySelectorAll('.clue-item').forEach(el => el.classList.remove('active'));
-  const wordNum = getWordNum(sr, sc, dir);
-  if(wordNum) {
-    const id = (dir==='across'?'ac-':'dn-') + wordNum;
-    const el = document.getElementById(id);
-    if(el) el.classList.add('active');
+function generatePuzzle(seed){
+  const rng=SeededRNG(seed);
+  for(let attempt=0;attempt<8000;attempt++){
+    const a1=pick(WORDS,rng);
+    const d1c=BY_POS[0][a1[0]],d2c=BY_POS[0][a1[2]],d3c=BY_POS[0][a1[4]];
+    if(!d1c||!d2c||!d3c)continue;
+    const d1=pick(d1c,rng),d2=pick(d2c,rng),d3=pick(d3c,rng);
+    const a2c=(BY_POS[0][d1[2]]||[]).filter(w=>w[2]===d2[2]&&w[4]===d3[2]);
+    if(!a2c.length)continue;
+    const a2=pick(a2c,rng);
+    const a3c=(BY_POS[0][d1[4]]||[]).filter(w=>w[2]===d2[4]&&w[4]===d3[4]);
+    if(!a3c.length)continue;
+    const a3=pick(a3c,rng);
+    if(new Set([a1,a2,a3,d1,d2,d3]).size===6)
+      return {a1,a2,a3,d1,d2,d3};
   }
+  return null;
 }
 
-function updateCellLetter(r, c) {
-  const el = cellEl(r,c);
-  if(!el) return;
-  const span = el.querySelector('.cw-letter');
-  if(span) span.textContent = userGrid[r][c];
+// ── build 5x5 grid array from words ──────────────────────────────────────────
+// Returns 5x5 array; '#' = black
+function wordsToGrid({a1,a2,a3,d1,d2,d3}){
+  const g=Array.from({length:5},()=>Array(5).fill('#'));
+  for(let c=0;c<5;c++){g[0][c]=a1[c];g[2][c]=a2[c];g[4][c]=a3[c];}
+  for(let r=0;r<5;r++){g[r][0]=d1[r];g[r][2]=d2[r];g[r][4]=d3[r];}
+  return g;
 }
 
-// --- word helpers ---
+// ── date helpers ──────────────────────────────────────────────────────────────
+function getDayOfYear(date){
+  return Math.floor((date-new Date(date.getFullYear(),0,0))/86400000);
+}
+function formatDate(date){
+  return date.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+}
 
-function getWordCells(r, c, d) {
-  const cells = [];
-  if(d === 'across') {
-    // find start of this across word
-    let sc = c;
-    while(sc > 0 && puzz.grid[r][sc-1] !== '#') sc--;
-    for(let cc = sc; cc < 5 && puzz.grid[r][cc] !== '#'; cc++) cells.push([r,cc]);
-  } else {
-    let sr = r;
-    while(sr > 0 && puzz.grid[sr-1][c] !== '#') sr--;
-    for(let rr = sr; rr < 5 && puzz.grid[rr][c] !== '#'; rr++) cells.push([rr,c]);
+// ── state ─────────────────────────────────────────────────────────────────────
+const today=new Date();today.setHours(0,0,0,0);
+let offset=0,puzz=null,grid=null,user=null,sel=null,dir='across';
+
+// ── cell element helper ───────────────────────────────────────────────────────
+function cellEl(r,c){return document.querySelector(`.cw-cell[data-r="${r}"][data-c="${c}"]`)}
+
+// ── highlights (no grid rebuild) ──────────────────────────────────────────────
+function highlight(){
+  document.querySelectorAll('.cw-cell').forEach(el=>el.classList.remove('selected','hilite'));
+  if(!sel)return;
+  const[sr,sc]=sel;
+  wordCells(sr,sc,dir).forEach(([r,c])=>{
+    const el=cellEl(r,c);if(el)el.classList.add('hilite');
+  });
+  const s=cellEl(sr,sc);if(s){s.classList.remove('hilite');s.classList.add('selected');}
+  document.querySelectorAll('.clue-item').forEach(el=>el.classList.remove('active'));
+  const num=wordNum(sr,sc,dir);
+  if(num){const el=document.getElementById((dir==='across'?'ac':'dn')+'-'+num);if(el)el.classList.add('active');}
+}
+
+// ── word helpers ──────────────────────────────────────────────────────────────
+function wordCells(r,c,d){
+  const cells=[];
+  if(d==='across'){
+    let sc=c;while(sc>0&&grid[r][sc-1]!=='#')sc--;
+    for(let cc=sc;cc<5&&grid[r][cc]!=='#';cc++)cells.push([r,cc]);
+  }else{
+    let sr=r;while(sr>0&&grid[sr-1][c]!=='#')sr--;
+    for(let rr=sr;rr<5&&grid[rr][c]!=='#';rr++)cells.push([rr,c]);
   }
   return cells;
 }
 
-function getWordNum(r, c, d) {
-  const cells = getWordCells(r, c, d);
-  if(!cells.length) return null;
-  const [wr, wc] = cells[0];
-  const src = d==='across' ? puzz.acrossNums : puzz.downNums;
-  for(const [n, pos] of Object.entries(src)) {
-    if(pos[0]===wr && pos[1]===wc) return n;
-  }
+function wordNum(r,c,d){
+  const cells=wordCells(r,c,d);if(!cells.length)return null;
+  const[wr,wc]=cells[0];
+  const src=d==='across'?puzz.acrossNums:puzz.downNums;
+  for(const[n,pos]of Object.entries(src))if(pos[0]===wr&&pos[1]===wc)return n;
   return null;
 }
 
-function getClueNum(r, c) {
-  for(const [n,pos] of Object.entries(puzz.acrossNums)) { if(pos[0]===r && pos[1]===c) return n; }
-  for(const [n,pos] of Object.entries(puzz.downNums)) { if(pos[0]===r && pos[1]===c) return n; }
+function clueNumAt(r,c){
+  for(const[n,p]of Object.entries(puzz.acrossNums))if(p[0]===r&&p[1]===c)return n;
+  for(const[n,p]of Object.entries(puzz.downNums))if(p[0]===r&&p[1]===c)return n;
   return null;
 }
 
-// --- grid build (called once per puzzle) ---
+// ── update single letter span ─────────────────────────────────────────────────
+function setLetter(r,c){
+  const el=cellEl(r,c);if(!el)return;
+  const sp=el.querySelector('.cw-letter');if(sp)sp.textContent=user[r][c];
+}
 
-function buildGrid() {
-  const g = document.getElementById('cwGrid');
-  g.innerHTML = '';
-  for(let r=0;r<5;r++) {
-    for(let c=0;c<5;c++) {
-      const cell = document.createElement('div');
-      cell.className = 'cw-cell';
-      cell.dataset.r = r;
-      cell.dataset.c = c;
-      if(puzz.grid[r][c] === '#') {
-        cell.classList.add('black');
-      } else {
-        const num = getClueNum(r,c);
-        if(num) {
-          const n = document.createElement('span');
-          n.className = 'cw-num';
-          n.textContent = num;
-          cell.appendChild(n);
-        }
-        const letter = document.createElement('span');
-        letter.className = 'cw-letter';
-        letter.textContent = userGrid[r][c];
-        cell.appendChild(letter);
-        cell.addEventListener('mousedown', (e) => {
-          e.preventDefault(); // prevent blur on hidden input
-          handleCellClick(r, c);
-        });
-      }
-      // thick borders for 3x3 box separation
-      if(c===2) cell.classList.add('thick-right');
-      if(r===2) cell.classList.add('thick-bottom');
-      g.appendChild(cell);
-    }
+// ── build grid DOM (once per puzzle) ─────────────────────────────────────────
+function buildGrid(){
+  const g=document.getElementById('cwGrid');g.innerHTML='';
+  for(let r=0;r<5;r++)for(let c=0;c<5;c++){
+    const cell=document.createElement('div');
+    cell.className='cw-cell';cell.dataset.r=r;cell.dataset.c=c;
+    if(grid[r][c]==='#'){cell.classList.add('black');g.appendChild(cell);continue;}
+    if(c===2)cell.classList.add('thick-r');
+    if(r===2)cell.classList.add('thick-b');
+    const num=clueNumAt(r,c);
+    if(num){const n=document.createElement('span');n.className='cw-num';n.textContent=num;cell.appendChild(n);}
+    const lsp=document.createElement('span');lsp.className='cw-letter';lsp.textContent=user[r][c];cell.appendChild(lsp);
+    cell.addEventListener('mousedown',e=>{e.preventDefault();clickCell(r,c);});
+    g.appendChild(cell);
   }
 }
 
-function handleCellClick(r, c) {
-  if(sel && sel[0]===r && sel[1]===c) {
-    // toggle direction if clicking same cell
-    dir = dir==='across' ? 'down' : 'across';
-    // if new direction has only 1 cell (black neighbors), stay on original
-    if(getWordCells(r,c,dir).length < 2) dir = dir==='across'?'down':'across';
-  } else {
-    sel = [r, c];
-    // auto-pick direction: prefer current dir if valid, else switch
-    if(getWordCells(r,c,dir).length < 2) dir = dir==='across'?'down':'across';
+function clickCell(r,c){
+  if(sel&&sel[0]===r&&sel[1]===c){
+    const nd=dir==='across'?'down':'across';
+    if(wordCells(r,c,nd).length>=2)dir=nd;
+  }else{
+    sel=[r,c];
+    if(wordCells(r,c,dir).length<2)dir=dir==='across'?'down':'across';
   }
-  updateHighlights();
-  focusCapture();
+  highlight();focusCap();
 }
 
-function focusCapture() {
-  const cap = document.getElementById('cwCapture');
-  cap.value = '';
-  cap.focus();
-}
+function focusCap(){const c=document.getElementById('cwCap');c.value='';c.focus();}
 
-// --- keyboard handling on hidden input ---
-
-document.getElementById('cwCapture').addEventListener('keydown', function(e) {
-  if(!sel) return;
-  const [r, c] = sel;
-
-  if(e.key === 'Backspace') {
-    e.preventDefault();
-    if(userGrid[r][c]) {
-      userGrid[r][c] = '';
-      updateCellLetter(r,c);
-    } else {
-      movePrev();
-    }
-    return;
-  }
-  if(e.key === 'Delete') {
-    e.preventDefault();
-    userGrid[r][c] = '';
-    updateCellLetter(r,c);
-    return;
-  }
-  if(e.key === 'ArrowRight') { e.preventDefault(); dir='across'; moveNext(); return; }
-  if(e.key === 'ArrowLeft')  { e.preventDefault(); dir='across'; movePrev(); return; }
-  if(e.key === 'ArrowDown')  { e.preventDefault(); dir='down';   moveNext(); return; }
-  if(e.key === 'ArrowUp')    { e.preventDefault(); dir='down';   movePrev(); return; }
-  if(e.key === 'Tab')        { e.preventDefault(); return; }
-  if(e.key === 'Escape')     { sel=null; updateHighlights(); return; }
-
-  // letter input
-  if(e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
-    e.preventDefault();
-    if(puzz.grid[r][c] === '#') return;
-    userGrid[r][c] = e.key.toUpperCase();
-    updateCellLetter(r,c);
-    moveNext();
-    checkWinCW();
-  }
-});
-
-// keep capture focused when it blurs (unless user clicked elsewhere)
-document.getElementById('cwCapture').addEventListener('blur', function() {
-  if(sel) setTimeout(() => { if(sel) document.getElementById('cwCapture').focus(); }, 10);
-});
-
-function moveNext() {
-  if(!sel) return;
-  const [r,c] = sel;
-  const cells = getWordCells(r,c,dir);
-  const idx = cells.findIndex(([cr,cc])=>cr===r&&cc===c);
-  if(idx < cells.length-1) {
-    sel = cells[idx+1];
-    updateHighlights();
-  }
-}
-
-function movePrev() {
-  if(!sel) return;
-  const [r,c] = sel;
-  const cells = getWordCells(r,c,dir);
-  const idx = cells.findIndex(([cr,cc])=>cr===r&&cc===c);
-  if(idx > 0) {
-    sel = cells[idx-1];
-    updateHighlights();
-  }
-}
-
-// --- clue rendering ---
-
-function renderClues() {
-  const ac = document.getElementById('acrossClues');
-  const dn = document.getElementById('downClues');
-  ac.innerHTML = ''; dn.innerHTML = '';
-  for(const [n, clue] of Object.entries(puzz.across)) {
-    const d = document.createElement('div');
-    d.className = 'clue-item'; d.id = 'ac-'+n;
-    d.textContent = n+'. '+clue;
-    const pos = puzz.acrossNums[n];
-    d.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      sel = [pos[0],pos[1]]; dir='across';
-      updateHighlights(); focusCapture();
-    });
+// ── clue panel ────────────────────────────────────────────────────────────────
+function renderClues(){
+  const ac=document.getElementById('acrossClues'),dn=document.getElementById('downClues');
+  ac.innerHTML='';dn.innerHTML='';
+  for(const[n,clue]of Object.entries(puzz.across)){
+    const d=document.createElement('div');d.className='clue-item';d.id='ac-'+n;
+    d.textContent=n+'. '+clue;
+    const pos=puzz.acrossNums[n];
+    d.addEventListener('mousedown',e=>{e.preventDefault();sel=[pos[0],pos[1]];dir='across';highlight();focusCap();});
     ac.appendChild(d);
   }
-  for(const [n, clue] of Object.entries(puzz.down)) {
-    const d = document.createElement('div');
-    d.className = 'clue-item'; d.id = 'dn-'+n;
-    d.textContent = n+'. '+clue;
-    const pos = puzz.downNums[n];
-    d.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      sel = [pos[0],pos[1]]; dir='down';
-      updateHighlights(); focusCapture();
-    });
+  for(const[n,clue]of Object.entries(puzz.down)){
+    const d=document.createElement('div');d.className='clue-item';d.id='dn-'+n;
+    d.textContent=n+'. '+clue;
+    const pos=puzz.downNums[n];
+    d.addEventListener('mousedown',e=>{e.preventDefault();sel=[pos[0],pos[1]];dir='down';highlight();focusCap();});
     dn.appendChild(d);
   }
 }
 
-// --- puzzle load ---
-
-function buildCW() {
-  const d = new Date(today); d.setDate(d.getDate() + offset);
-  const day = getDayOfYear(d);
-  puzz = puzzles[((day-1) % puzzles.length + puzzles.length) % puzzles.length];
-  userGrid = puzz.grid.map(row => row.split('').map(ch => ch==='#'?'#':''));
-  sel = null; dir = 'across';
-  buildGrid();
-  renderClues();
-  updateHighlights();
-  document.getElementById('statusMsg').textContent = '';
-  document.getElementById('statusMsg').className = 'status-msg';
-}
-
-// --- actions ---
-
-function checkCW() {
-  let errors=0, filled=0;
-  for(let r=0;r<5;r++) for(let c=0;c<5;c++) {
-    if(puzz.grid[r][c]==='#') continue;
-    if(userGrid[r][c]) { filled++; if(userGrid[r][c]!==puzz.grid[r][c]) errors++; }
+// ── keyboard ──────────────────────────────────────────────────────────────────
+document.getElementById('cwCap').addEventListener('keydown',function(e){
+  if(!sel)return;
+  const[r,c]=sel;
+  if(e.key==='Backspace'){
+    e.preventDefault();
+    if(user[r][c]){user[r][c]='';setLetter(r,c);}else movePrev();
+    return;
   }
-  const msg = document.getElementById('statusMsg');
-  if(!filled) { msg.textContent='Fill in some letters first.'; return; }
-  msg.className = errors ? 'status-msg' : 'status-msg win';
-  msg.textContent = errors ? errors+' incorrect letter'+(errors>1?'s':'')+'.': 'All filled letters are correct.';
+  if(e.key==='Delete'){e.preventDefault();user[r][c]='';setLetter(r,c);return;}
+  if(e.key==='ArrowRight'){e.preventDefault();dir='across';moveNext();return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();dir='across';movePrev();return;}
+  if(e.key==='ArrowDown'){e.preventDefault();dir='down';moveNext();return;}
+  if(e.key==='ArrowUp'){e.preventDefault();dir='down';movePrev();return;}
+  if(e.key==='Escape'){sel=null;highlight();return;}
+  if(e.key==='Tab'){e.preventDefault();return;}
+  if(e.key.length===1&&/[a-zA-Z]/.test(e.key)){
+    e.preventDefault();
+    user[r][c]=e.key.toUpperCase();
+    setLetter(r,c);moveNext();checkWin();
+  }
+});
+
+document.getElementById('cwCap').addEventListener('blur',function(){
+  if(sel)setTimeout(()=>{if(sel)document.getElementById('cwCap').focus();},10);
+});
+
+function moveNext(){
+  if(!sel)return;const[r,c]=sel;
+  const cells=wordCells(r,c,dir);
+  const idx=cells.findIndex(([cr,cc])=>cr===r&&cc===c);
+  if(idx<cells.length-1){sel=cells[idx+1];highlight();}
+}
+function movePrev(){
+  if(!sel)return;const[r,c]=sel;
+  const cells=wordCells(r,c,dir);
+  const idx=cells.findIndex(([cr,cc])=>cr===r&&cc===c);
+  if(idx>0){sel=cells[idx-1];highlight();}
 }
 
-function resetCW() {
-  userGrid = puzz.grid.map(row => row.split('').map(ch => ch==='#'?'#':''));
-  sel=null; dir='across';
-  // update all letter spans
-  for(let r=0;r<5;r++) for(let c=0;c<5;c++) updateCellLetter(r,c);
-  updateHighlights();
+// ── load puzzle ───────────────────────────────────────────────────────────────
+function loadPuzzle(){
+  const d=new Date(today);d.setDate(d.getDate()+offset);
+  const seed=getDayOfYear(d)+(d.getFullYear()-2024)*1000;
+  const words=generatePuzzle(seed);
+  if(!words){console.error('No puzzle for seed',seed);return;}
+  grid=wordsToGrid(words);
+  user=grid.map(row=>row.map(ch=>ch==='#'?'#':''));
+  // clue numbering: 1=across1/down1, 2=down2, 3=across2/down3, 4=down4... 
+  // For this grid: acrossNums 1=[0,0] 3=[2,0] 5=[4,0]   downNums 1=[0,0] 2=[0,2] 3=[0,4]
+  puzz={
+    across:{
+      1:CLUES[words.a1],
+      3:CLUES[words.a2],
+      5:CLUES[words.a3]
+    },
+    down:{
+      1:CLUES[words.d1],
+      2:CLUES[words.d2],
+      3:CLUES[words.d3]
+    },
+    acrossNums:{1:[0,0],3:[2,0],5:[4,0]},
+    downNums:{1:[0,0],2:[0,2],3:[0,4]}
+  };
+  sel=null;dir='across';
+  buildGrid();renderClues();highlight();
   document.getElementById('statusMsg').textContent='';
-}
-
-function revealCW() {
-  for(let r=0;r<5;r++) for(let c=0;c<5;c++) {
-    if(puzz.grid[r][c]!=='#') { userGrid[r][c]=puzz.grid[r][c]; updateCellLetter(r,c); }
-  }
-  document.getElementById('statusMsg').textContent='Puzzle revealed.';
   document.getElementById('statusMsg').className='status-msg';
 }
 
-function checkWinCW() {
-  for(let r=0;r<5;r++) for(let c=0;c<5;c++) {
-    if(puzz.grid[r][c]==='#') continue;
-    if(userGrid[r][c]!==puzz.grid[r][c]) return;
+// ── actions ───────────────────────────────────────────────────────────────────
+function checkCW(){
+  let errors=0,filled=0;
+  for(let r=0;r<5;r++)for(let c=0;c<5;c++){
+    if(grid[r][c]==='#')continue;
+    if(user[r][c]){filled++;if(user[r][c]!==grid[r][c])errors++;}
+  }
+  const msg=document.getElementById('statusMsg');
+  if(!filled){msg.textContent='Fill in some letters first.';return;}
+  msg.className=errors?'status-msg':'status-msg win';
+  msg.textContent=errors?errors+' incorrect letter'+(errors>1?'s':''):'. All filled letters are correct.';
+}
+
+function resetCW(){
+  user=grid.map(row=>row.map(ch=>ch==='#'?'#':''));
+  sel=null;
+  for(let r=0;r<5;r++)for(let c=0;c<5;c++)setLetter(r,c);
+  highlight();
+  document.getElementById('statusMsg').textContent='';
+}
+
+function revealCW(){
+  for(let r=0;r<5;r++)for(let c=0;c<5;c++){
+    if(grid[r][c]!=='#'){user[r][c]=grid[r][c];setLetter(r,c);}
+  }
+  document.getElementById('statusMsg').textContent='Puzzle revealed.';
+}
+
+function checkWin(){
+  for(let r=0;r<5;r++)for(let c=0;c<5;c++){
+    if(grid[r][c]==='#')continue;
+    if(user[r][c]!==grid[r][c])return;
   }
   document.getElementById('statusMsg').textContent='Solved. Well done.';
   document.getElementById('statusMsg').className='status-msg win';
 }
 
-function changeDay(dir2) {
-  offset += dir2;
-  const d = new Date(today); d.setDate(d.getDate() + offset);
-  document.getElementById('dateLabel').textContent = formatDate(d);
-  document.getElementById('prevBtn').disabled = offset <= -30;
-  document.getElementById('nextBtn').disabled = offset >= 0;
-  buildCW();
+function changeDay(d){
+  offset+=d;
+  const dt=new Date(today);dt.setDate(dt.getDate()+offset);
+  document.getElementById('dateLabel').textContent=formatDate(dt);
+  document.getElementById('prevBtn').disabled=offset<=-30;
+  document.getElementById('nextBtn').disabled=offset>=0;
+  loadPuzzle();
 }
 
-// --- init ---
-const initD = new Date(today);
-document.getElementById('dateLabel').textContent = formatDate(initD);
-document.getElementById('prevBtn').disabled = false;
-document.getElementById('nextBtn').disabled = true;
-buildCW();
+// ── init ──────────────────────────────────────────────────────────────────────
+document.getElementById('dateLabel').textContent=formatDate(today);
+document.getElementById('prevBtn').disabled=false;
+document.getElementById('nextBtn').disabled=true;
+loadPuzzle();
 </script>
 </body>
 </html>
