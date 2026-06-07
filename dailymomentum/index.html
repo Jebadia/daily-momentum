@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Momentum - Motivation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.quote-mark { font-family:'Cormorant Garamond',serif; font-size:5rem; line-height:0.4; color:var(--accent); opacity:0.2; display:block; margin-bottom:1.2rem; font-weight:300; }
+.message { font-family:'Cormorant Garamond',serif; font-size:clamp(1.65rem,4vw,2.5rem); font-weight:300; line-height:1.45; color:var(--ink); letter-spacing:0.01em; max-width:660px; text-align:center; }
+.day-counter { margin-top:2.5rem; font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); }
+.progress-bar { width:80px; height:1px; background:var(--rule); margin:0.9rem auto 0; overflow:hidden; }
+.progress-fill { height:100%; background:var(--accent); }
+</style>
+</head>
+<body>
+<div class="top-rule"></div>
+<p class="site-tag">Daily Momentum</p>
+<nav>
+  <a href="index.html" class="nav-link active">Motivation</a><span class="nav-sep">|</span>
+  <a href="jokes.html" class="nav-link">Dad Jokes</a><span class="nav-sep">|</span>
+  <a href="vocabulary.html" class="nav-link">Vocabulary</a><span class="nav-sep">|</span>
+  <a href="horoscope.html" class="nav-link">Horoscope</a><span class="nav-sep">|</span>
+  <a href="riddle.html" class="nav-link">Riddle</a><span class="nav-sep">|</span>
+  <a href="history.html" class="nav-link">This Day</a><span class="nav-sep">|</span>
+  <a href="crossword.html" class="nav-link">Crossword</a><span class="nav-sep">|</span>
+  <a href="sudoku.html" class="nav-link">Sudoku</a>
+</nav>
+<div class="divider"></div>
+<main>
+  <div class="day-nav">
+    <button class="day-nav-btn" id="prevBtn" onclick="changeDay(-1)">&#8592;</button>
+    <span class="date-label" id="dateLabel"></span>
+    <button class="day-nav-btn" id="nextBtn" onclick="changeDay(1)">&#8594;</button>
+  </div>
+  <div class="content-wrap" id="contentWrap">
+    <span class="quote-mark">"</span>
+    <p class="message" id="message"></p>
+    <p class="day-counter" id="dayCounter"></p>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</main>
+<footer>
+  <a href="https://www.linkedin.com/in/jebbreese/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    Connect on LinkedIn
+  </a>
+</footer>
+<a href="https://paypal.me/jebbreese" class="donate-btn" target="_blank" rel="noopener noreferrer">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+  Buy me a Dutch Bros
+</a>
+<script>
+const messages = [
+  "The work you do today is the foundation someone else will build on tomorrow.",
+  "Clarity is not found in waiting. It comes from moving forward with what you know now.",
+  "Small effort, repeated consistently, outperforms large effort applied sporadically.",
+  "The person you are becoming is shaped by the choices you make when no one is watching.",
+  "Every expert was once a beginner who decided not to quit.",
+  "Discipline is not a cage. It is the structure that sets you free.",
+  "Progress does not require perfection. It requires persistence.",
+  "The day you stop comparing yourself to others is the day you start growing fastest.",
+  "Your energy is finite. Spend it on what actually matters.",
+  "Momentum is built in the moments when you act despite feeling uninspired.",
+  "The obstacle is not in your way. It is the way.",
+  "Focus less on who you were yesterday and more on who you are deciding to be today.",
+  "Reputation is built one interaction at a time. Make each one count.",
+  "Confidence is not the absence of doubt. It is acting in spite of it.",
+  "A decision made with incomplete information is still better than no decision at all.",
+  "The people who change the world are the ones who kept going one day longer than expected.",
+  "You cannot pour from an empty vessel. Rest is part of the work.",
+  "Do not wait for the right moment. Build the right habits and the moments will follow.",
+  "Hard work without direction is just effort. Add intention and it becomes progress.",
+  "The quality of your questions determines the quality of your life.",
+  "Gratitude does not mean everything is fine. It means you can still find what is good.",
+  "Resilience is not about bouncing back. It is about moving forward with what remains.",
+  "The sharpest tool in your kit is your willingness to keep learning.",
+  "Own the outcome. Even when the circumstances were not your fault.",
+  "You are more capable than your worst day suggests.",
+  "A plan imperfectly executed beats a perfect plan still being refined.",
+  "The version of you that succeeds is the one who shows up consistently.",
+  "What you tolerate, you teach others to expect from you.",
+  "Patience is not passive. It is active trust in the process.",
+  "Lead with curiosity and you will rarely run out of answers.",
+  "The best apology is changed behavior.",
+  "Hard days prove that you are doing something worth doing.",
+  "Excellence is a standard, not an outcome. Hold it daily.",
+  "You do not have to feel ready to begin.",
+  "The courage to start is rarer than the talent to finish.",
+  "Do not let the size of the goal distract you from the size of the next step.",
+  "Character is not built in crisis. It is revealed there.",
+  "What you think about most is what you become over time.",
+  "Showing up for others is also showing up for yourself.",
+  "The gap between where you are and where you want to be is called effort.",
+  "Creativity is not a gift. It is a practice.",
+  "Problems are just questions that have not been answered yet.",
+  "The most powerful thing you can say is, I was wrong and here is what I learned.",
+  "Success is not final. Keep building.",
+  "Your mindset is not fixed. You can change it, starting today.",
+  "Be the kind of person you would want to work alongside.",
+  "What looks like luck from the outside is usually preparation meeting opportunity.",
+  "The habit of beginning is worth more than the skill of finishing.",
+  "Every challenge you have faced has already increased your capacity.",
+  "Make the decision, then make it right.",
+  "The most underrated skill is follow-through.",
+  "A strong foundation is not glamorous. It is essential.",
+  "Pressure is a signal that something important is at stake.",
+  "Do the work that will matter to you in ten years.",
+  "You earn trust in drops and lose it in buckets. Protect it accordingly.",
+  "The details you overlook are often what others remember most.",
+  "Growth is rarely comfortable and rarely announced. It just happens.",
+  "When in doubt, be the most prepared person in the room.",
+  "Saying no to the wrong things creates space for the right ones.",
+  "What you learn in failure cannot be taught any other way.",
+  "Generosity is a competitive advantage most people underestimate.",
+  "Clarity of purpose turns ordinary effort into extraordinary results.",
+  "The hardest part of any project is starting it honestly.",
+  "Respect for others begins with respect for your own time and theirs.",
+  "The voice that tells you to quit is not wisdom. It is fear.",
+  "Doing good work quietly is still doing good work.",
+  "Every great team was built one honest conversation at a time.",
+  "Seek to understand before you seek to be understood.",
+  "A strong week is built on a strong Monday morning decision.",
+  "The most important meeting of the day is the one with yourself.",
+  "What you practice in private performs in public.",
+  "Ambition without humility is just arrogance in motion.",
+  "Finishing what you start is a form of integrity.",
+  "The uncomfortable conversation you are avoiding is probably the one you need most.",
+  "Great outcomes are almost always the result of great consistency.",
+  "You are allowed to outgrow the version of yourself from last year.",
+  "Build something today that future you will be grateful for.",
+  "How you treat people who can do nothing for you says everything about you.",
+  "Every setback is a setup if you choose to see it that way.",
+  "The habit of reflection is what separates experience from wisdom.",
+  "Work ethic is not inherited. It is chosen every single day.",
+  "Do not mistake motion for progress. Know the difference.",
+  "Your attitude in difficult moments is your most visible leadership quality.",
+  "The right answer delivered with kindness lands better than the right answer delivered harshly.",
+  "Consistency in small things creates credibility in big things.",
+  "Do not shrink yourself to fit into spaces that were too small for you anyway.",
+  "Every great outcome was at some point just a decision to try.",
+  "You become what you repeatedly do, not what you occasionally attempt.",
+  "The people worth impressing are the ones who value substance over style.",
+  "Feedback is not criticism. It is information. Use it.",
+  "Intention without action is just a wish.",
+  "The strongest thing you can say is, I need help.",
+  "Every morning is an opportunity to correct yesterday's course.",
+  "Impact does not require an audience. It requires commitment.",
+  "Knowing when to pause is as important as knowing when to push.",
+  "You are not behind. You are on your own timeline.",
+  "The best use of your past is to learn from it, not to live in it.",
+  "Hard work compounds just like interest. Start early and stay consistent.",
+  "Your reputation travels further than you do. Tend to it.",
+  "Do not let busyness masquerade as productivity.",
+  "The biggest risk is taking no risks at all.",
+  "Every person you meet knows something you do not. Stay curious.",
+  "Discipline today creates options tomorrow.",
+  "What seems impossible now will seem obvious once you have done it.",
+  "The standard you set for yourself is the one others will eventually hold you to.",
+  "Helping others succeed is one of the fastest ways to grow yourself.",
+  "Momentum is real. Build it deliberately.",
+  "The gap between knowing and doing is where most people get stuck.",
+  "Do not wait for someone to give you permission to lead.",
+  "Show up fully, even for the ordinary days.",
+  "A calm mind makes better decisions than an urgent one.",
+  "The work that feels most difficult is often the most worth doing.",
+  "You have more influence than you realize. Use it well.",
+  "Adaptability is not weakness. It is intelligence in motion.",
+  "Own your mornings and you will own your outcomes.",
+  "The quality of your relationships determines the quality of your results.",
+  "Ask better questions. They lead to better answers and better thinking.",
+  "Every version of success started as someone's unrealistic goal.",
+  "Do not confuse comfort with safety. Growth lives outside comfort.",
+  "Your habits are your biography, written one day at a time.",
+  "Focus is not about doing less. It is about doing the right things fully.",
+  "Be someone who keeps their word, especially to themselves.",
+  "The fastest way to change how others see you is to change how you show up.",
+  "Problems get smaller the moment you decide to solve them.",
+  "Real confidence is quiet. It does not need to announce itself.",
+  "Bring your best thinking to the smallest tasks. Excellence becomes a habit.",
+  "Listening is a skill. Most people are just waiting to talk.",
+  "The work you avoid is usually the work that will move you forward most.",
+  "Your limitations are mostly mental. Test them regularly.",
+  "Effort is not always enough, but it is always necessary.",
+  "Good judgment comes from experience. Experience comes from bad judgment. Keep going.",
+  "The person who reads widely rarely runs out of perspective.",
+  "Do not rush the process. Trust it.",
+  "Great leaders make the people around them feel capable.",
+  "The decision to try again after failing is where character lives.",
+  "You will not always feel motivated. Act anyway.",
+  "The best investment you can make is in your own growth.",
+  "A focused hour beats a distracted day.",
+  "What you do in the next hour will define who you are tomorrow.",
+  "Speak less. Listen more. Think before both.",
+  "The way you do anything is the way you do everything.",
+  "Protect your attention. It is your most valuable resource.",
+  "Do not let perfect be the reason good never gets done.",
+  "Results are the receipts of effort. Keep showing up.",
+  "Build the kind of integrity that holds up when no one is looking.",
+  "The people who make a real difference show up before they are needed.",
+  "Every great achievement is just a series of ordinary efforts strung together.",
+  "Vulnerability is not weakness. It is the beginning of real connection.",
+  "You grow most in the spaces between certainty and clarity.",
+  "What you consistently practice, you eventually become.",
+  "Make decisions based on who you are becoming, not who you have been.",
+  "A sense of humor about yourself is a sign of genuine confidence.",
+  "Do not underestimate how far a kind word travels.",
+  "Strength is not the absence of struggle. It is what you build through it.",
+  "The competitor you should focus on most is yesterday's version of you.",
+  "Success rarely looks the way you imagined it. Embrace that.",
+  "Stay in motion. Even slow progress beats a standstill.",
+  "You attract what you consistently put out into the world.",
+  "The people who earn the most trust are the ones who ask for the least of it.",
+  "Do not let fear of judgment keep you from making good decisions.",
+  "Every problem you solve builds the toolkit for the next one.",
+  "Being present is the rarest gift you can give anyone, including yourself.",
+  "The ideas you act on matter more than the ideas you collect.",
+  "Good values are expensive in the short term and priceless in the long run.",
+  "Build your energy, protect your focus, and the results will follow.",
+  "The best teams are built on psychological safety, not just skill.",
+  "Teach what you know and you will understand it better yourself.",
+  "Comfort zones are comfortable because nothing is at stake.",
+  "Every day you stay consistent adds a brick to something worth building.",
+  "The person who takes responsibility rarely stays stuck for long.",
+  "Take pride in the work, not just the outcome.",
+  "Gratitude and ambition are not in conflict. You can hold both.",
+  "The simplest path to respect is to do what you say you will do.",
+  "Think long-term when planning and short-term when executing.",
+  "Asking for feedback is a sign of strength, not insecurity.",
+  "You will never feel fully ready. Start anyway.",
+  "The world benefits most from people who operate at their full capacity.",
+  "What costs you nothing today may cost you everything tomorrow.",
+  "A well-rested mind outperforms an exhausted one every time.",
+  "Your principles are only real if they hold up under pressure.",
+  "The quality of your focus determines the quality of your output.",
+  "What you measure, you can improve. Start tracking what matters.",
+  "Give people the benefit of the doubt until they give you reason not to.",
+  "The work you put in before the opportunity arrives is what makes you ready for it.",
+  "Courage is not fearlessness. It is action in the presence of fear.",
+  "Execution separates those who dream from those who deliver.",
+  "You are the average of the standards you are willing to tolerate.",
+  "Do not let a hard week convince you that you are not capable.",
+  "The most important deadline is the one you set for yourself.",
+  "Every interaction is an opportunity to earn or erode trust.",
+  "Build something today that does not require your constant presence to function.",
+  "Spend more time with people who challenge you to grow.",
+  "The best version of yourself is not finished being built.",
+  "Tenacity is not stubbornness. It is belief that the effort is worth it.",
+  "Write the plan, work the plan, revise the plan. Repeat.",
+  "The discipline to delay gratification is one of the most powerful skills you can develop.",
+  "Problems rarely solve themselves. Show up and engage.",
+  "You are not competing with others. You are competing with your own potential.",
+  "The work that builds the most character is the work no one applauds.",
+  "Make it a habit to do at least one hard thing before noon.",
+  "Real change does not announce itself. It shows up quietly in your daily choices.",
+  "People remember how you made them feel long after they forget what you said.",
+  "Your environment shapes your outcomes. Design it intentionally.",
+  "The most important word in a long career is sustainable.",
+  "Make the ask. The worst answer is no, and you already have that.",
+  "Clarity comes from action, not from overthinking.",
+  "Precision in language leads to precision in thinking.",
+  "You cannot lead others further than you have gone yourself.",
+  "Surround yourself with people who raise the bar, not lower it.",
+  "Do not measure your success by someone else's measuring stick.",
+  "The best negotiating position is not needing the deal.",
+  "Energy is contagious. Decide what kind you want to spread.",
+  "Simplify before you amplify.",
+  "The goal is not just to survive the hard days. It is to learn from them.",
+  "Do not underestimate the value of showing up calm.",
+  "The breakthrough rarely comes when expected. Keep working and it will come.",
+  "Every conversation is a chance to either build or damage something.",
+  "What you read shapes how you think. Choose your inputs carefully.",
+  "The people who succeed long-term are the ones who make it about more than themselves.",
+  "You cannot control everything that happens, but you can control your response.",
+  "Do less, but do it better.",
+  "Progress on purpose is more valuable than progress by accident.",
+  "The harder the lesson, the longer it tends to stick.",
+  "Your ability to stay composed under pressure will always be noticed.",
+  "Look for the lesson before you look for the exit.",
+  "Act like the professional you want to be remembered as.",
+  "The smallest acts of integrity form the strongest reputations.",
+  "Do not just work hard. Work in the direction that matters.",
+  "Excellence is not an event. It is a daily practice.",
+  "The best ideas are often the simplest ones executed well.",
+  "Seek clarity, act with purpose, and the rest tends to follow.",
+  "You are not your past results. You are your next decision.",
+  "Good character is doing the right thing when it costs you something.",
+  "Momentum is maintained by showing up even when the results are not yet visible.",
+  "The projects worth doing are the ones that still feel worth it on the hard days.",
+  "Do the work nobody else wants to do and you will rarely lack opportunities.",
+  "A clear vision carried into daily action is the foundation of everything meaningful.",
+  "Rest is not a reward. It is a requirement.",
+  "What drains your energy is telling you something. Pay attention.",
+  "The way you handle endings determines the quality of your beginnings.",
+  "You grow by doing things you do not yet know how to do.",
+  "The right habit at the right time can change the trajectory of a year.",
+  "Finishing strong matters as much as starting well.",
+  "The difference between ordinary and extraordinary is often just sustained effort.",
+  "Make someone else's day a little easier. It costs almost nothing.",
+  "Strong decisions come from clear values, not just clear data.",
+  "The most confident people in the room are usually the most prepared.",
+  "Effort applied in the wrong direction is still wasted. Think before you push.",
+  "Your word is your brand. Keep it.",
+  "Invest in relationships before you need them. They are not built in emergencies.",
+  "When the path is unclear, move toward clarity by taking one more step.",
+  "The quiet consistency of good work is the most reliable path forward.",
+  "Hold yourself to the standard you would be proud to defend publicly.",
+  "Failure is not the opposite of success. It is part of the process.",
+  "Keep going. You have made it through every hard day so far.",
+  "The world needs more people who do what they say and mean what they do.",
+  "Your best thinking happens when you give it the space and silence it deserves.",
+  "Doing the right thing slowly is still doing the right thing.",
+  "The courage to be honest, even when it costs you, is rare and valuable.",
+  "Everything worthwhile is on the other side of consistent effort.",
+  "Do not let a difficult season convince you that this is your permanent condition.",
+  "What you build today, with care and intention, is the legacy you leave behind.",
+  "The version of you that kept going despite the doubt is the one worth becoming.",
+  "Every day is a fresh opportunity to move closer to who you are meant to be.",
+  "Start where you are. Use what you have. Do what you can.",
+  "The people who make a lasting impact rarely set out to be impressive. They set out to be useful.",
+  "Act from your values and you will rarely regret the outcome.",
+  "Your best work is still ahead of you. Keep showing up for it.",
+  "Do good work. Be honest. Treat people well. The rest takes care of itself.",
+  "The most important thing you can do today is the thing you have been putting off.",
+  "Quiet persistence in the face of difficulty is among the highest forms of courage.",
+  "Every decision you make is a vote for the person you are becoming.",
+  "Build a life that reflects your values, not just your ambitions.",
+  "The work is never finished. That is not a problem. That is the point.",
+  "What matters most rarely makes the most noise. Pay attention to the quiet things.",
+  "Today's effort is tomorrow's advantage.",
+  "You are not here to be comfortable. You are here to grow.",
+  "Keep your standards high and your excuses low.",
+  "The person who gives their best, regardless of the outcome, lives without regret.",
+  "One good decision today can change the course of the entire week.",
+  "Integrity is not situational. It is constant or it is nothing.",
+  "The strongest people are not the ones who never struggle. They are the ones who keep going.",
+  "Every day you choose your direction. Choose deliberately.",
+  "The work of becoming your best self is the most important work there is.",
+  "Be someone others can count on, starting with being someone you can count on.",
+  "The future belongs to those who prepare for it today.",
+  "What you start today, finish. Your word to yourself matters most of all."
+];
+
+function getDayOfYear(date) {
+  const start = new Date(date.getFullYear(), 0, 0);
+  return Math.floor((date - start) / 86400000);
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+}
+
+const today = new Date(); today.setHours(0,0,0,0);
+let offset = 0;
+
+function render() {
+  const d = new Date(today); d.setDate(d.getDate() + offset);
+  const day = getDayOfYear(d);
+  const idx = ((day - 1) % 365 + 365) % 365;
+  document.getElementById('dateLabel').textContent = formatDate(d);
+  document.getElementById('message').textContent = messages[idx];
+  document.getElementById('dayCounter').textContent = 'Day ' + day + ' of ' + d.getFullYear();
+  document.getElementById('progressFill').style.width = Math.min((day/365)*100,100) + '%';
+  document.getElementById('prevBtn').disabled = offset <= -30;
+  document.getElementById('nextBtn').disabled = offset >= 0;
+  const w = document.getElementById('contentWrap');
+  w.style.animation = 'none'; w.offsetHeight; w.style.animation = '';
+}
+
+function changeDay(dir) { offset += dir; render(); }
+render();
+</script>
+</body>
+</html>

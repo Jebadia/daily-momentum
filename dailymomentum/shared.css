@@ -1,0 +1,179 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0F0F0D;
+  --ink: #E8E4DC;
+  --muted: #7A7670;
+  --accent: #8BA888;
+  --accent-dim: rgba(139,168,136,0.35);
+  --rule: rgba(232,228,220,0.1);
+  --card: rgba(232,228,220,0.04);
+  --card-border: rgba(232,228,220,0.08);
+}
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+body { display: flex; flex-direction: column; min-height: 100vh; }
+
+.top-rule { width: 100%; height: 3px; background: var(--accent); flex-shrink: 0; }
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.nav-link {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 2rem;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-link:hover { color: var(--ink); }
+.nav-link.active { color: var(--accent); background: rgba(139,168,136,0.08); }
+
+.nav-sep {
+  color: var(--rule);
+  font-size: 0.6rem;
+  user-select: none;
+}
+
+.site-tag {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  padding: 1.5rem 2rem 0;
+}
+
+.divider {
+  width: 1px;
+  height: 40px;
+  background: var(--rule);
+  margin: 1.5rem auto;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem 5rem;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.day-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.day-nav-btn {
+  background: none;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.day-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+.day-nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+.date-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.content-wrap {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+footer {
+  padding: 2rem 2rem;
+  text-align: center;
+  border-top: 1px solid var(--rule);
+  margin-top: auto;
+}
+
+.linkedin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+.linkedin-link:hover { color: var(--accent); }
+.linkedin-link svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+.donate-btn {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: #0F0F0D;
+  border: 1px solid rgba(139,168,136,0.35);
+  color: var(--accent);
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.1rem;
+  border-radius: 2rem;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.5);
+}
+.donate-btn:hover { border-color: var(--accent); background: rgba(139,168,136,0.08); color: #c8ddc6; }
+.donate-btn svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }

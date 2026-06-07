@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Momentum - This Day in History</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.year-badge { font-family:'Jost',sans-serif; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); text-align:center; margin-bottom:1rem; }
+.history-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.6rem,3.5vw,2.3rem); font-weight:300; line-height:1.35; color:var(--ink); text-align:center; max-width:620px; margin-bottom:1.5rem; }
+.history-body { font-family:'Cormorant Garamond',serif; font-size:clamp(1rem,2.2vw,1.25rem); font-weight:300; line-height:1.7; color:var(--muted); text-align:center; max-width:580px; }
+.category-tag { font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; border:1px solid var(--accent-dim); color:var(--accent); padding:0.25rem 0.7rem; border-radius:2rem; margin-bottom:2rem; display:inline-block; }
+</style>
+</head>
+<body>
+<div class="top-rule"></div>
+<p class="site-tag">Daily Momentum</p>
+<nav>
+  <a href="index.html" class="nav-link">Motivation</a><span class="nav-sep">|</span>
+  <a href="jokes.html" class="nav-link">Dad Jokes</a><span class="nav-sep">|</span>
+  <a href="vocabulary.html" class="nav-link">Vocabulary</a><span class="nav-sep">|</span>
+  <a href="horoscope.html" class="nav-link">Horoscope</a><span class="nav-sep">|</span>
+  <a href="riddle.html" class="nav-link">Riddle</a><span class="nav-sep">|</span>
+  <a href="history.html" class="nav-link active">This Day</a><span class="nav-sep">|</span>
+  <a href="crossword.html" class="nav-link">Crossword</a><span class="nav-sep">|</span>
+  <a href="sudoku.html" class="nav-link">Sudoku</a>
+</nav>
+<div class="divider"></div>
+<main>
+  <div class="day-nav">
+    <button class="day-nav-btn" id="prevBtn" onclick="changeDay(-1)">&#8592;</button>
+    <span class="date-label" id="dateLabel"></span>
+    <button class="day-nav-btn" id="nextBtn" onclick="changeDay(1)">&#8594;</button>
+  </div>
+  <div class="content-wrap" id="contentWrap">
+    <span class="category-tag" id="categoryTag"></span>
+    <p class="year-badge" id="yearBadge"></p>
+    <p class="history-title" id="historyTitle"></p>
+    <p class="history-body" id="historyBody"></p>
+  </div>
+</main>
+<footer>
+  <a href="https://www.linkedin.com/in/jebbreese/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    Connect on LinkedIn
+  </a>
+</footer>
+<a href="https://paypal.me/jebbreese" class="donate-btn" target="_blank" rel="noopener noreferrer">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+  Buy me a Dutch Bros
+</a>
+<script>
+const events = [
+  {y:1903,cat:"Science",t:"The Wright Brothers make the first powered flight",b:"Orville Wright piloted the Flyer for 12 seconds and 120 feet at Kitty Hawk, North Carolina, launching the age of aviation and forever changing how humanity moves through the world."},
+  {y:1969,cat:"Space",t:"Apollo 11 lands on the Moon",b:"Neil Armstrong became the first human to walk on the lunar surface, uttering words that would define an era. Some 600 million people watched on television as history unfolded 238,000 miles above Earth."},
+  {y:1945,cat:"History",t:"The United Nations Charter is signed in San Francisco",b:"Representatives of 50 nations signed the founding document of the United Nations, establishing an international body committed to maintaining peace and promoting cooperation among nations."},
+  {y:1879,cat:"Science",t:"Thomas Edison demonstrates a practical incandescent light bulb",b:"After thousands of experiments, Edison unveiled a bulb that burned for over 13 hours, illuminating not just a room but the dawn of the modern electrical age."},
+  {y:1955,cat:"Culture",t:"Disneyland opens in Anaheim, California",b:"Walt Disney's theme park opened its gates to the public, creating a new category of entertainment and a cultural institution that would inspire dozens of parks around the world."},
+  {y:1928,cat:"Science",t:"Alexander Fleming discovers penicillin",b:"Returning from vacation, Fleming noticed mold had contaminated a petri dish and killed the surrounding bacteria. That accidental observation led to the antibiotic era and the saving of hundreds of millions of lives."},
+  {y:1989,cat:"History",t:"The Berlin Wall falls",b:"After 28 years of dividing a city and symbolizing the Iron Curtain, crowds of East and West Germans began dismantling the wall, marking the beginning of German reunification and the end of the Cold War era."},
+  {y:1964,cat:"Civil Rights",t:"The Civil Rights Act is signed into law in the United States",b:"President Lyndon B. Johnson signed landmark legislation that outlawed discrimination based on race, color, religion, sex, or national origin, fundamentally reshaping American society."},
+  {y:1953,cat:"Science",t:"Watson and Crick publish the structure of DNA",b:"Their paper in Nature described the double helix structure of deoxyribonucleic acid, a discovery that would transform biology, medicine, and our understanding of life itself."},
+  {y:1994,cat:"Technology",t:"The first web browser, Netscape Navigator, is released",b:"The browser made the World Wide Web accessible to everyday users for the first time, sparking the internet revolution that would reshape commerce, communication, and culture within a decade."},
+  {y:1945,cat:"History",t:"World War II ends in Europe with Germany's unconditional surrender",b:"After nearly six years of devastating conflict, Germany signed the instrument of surrender, bringing V-E Day to a jubilant Allied world and ending the deadliest war in European history."},
+  {y:1865,cat:"History",t:"President Abraham Lincoln is assassinated at Ford's Theatre",b:"Shot by John Wilkes Booth while attending a performance, Lincoln died the following morning. His death came just days after the South's surrender, casting a shadow over the end of the Civil War."},
+  {y:1912,cat:"History",t:"The Titanic sinks in the North Atlantic",b:"The supposedly unsinkable RMS Titanic struck an iceberg and sank on her maiden voyage, killing over 1,500 people. The disaster changed maritime safety standards and captured the world's imagination for generations."},
+  {y:1939,cat:"Culture",t:"The Wizard of Oz premieres in Hollywood",b:"One of the most beloved films ever made debuted to immediate acclaim. The combination of Technicolor, memorable music, and a timeless story made it a cultural touchstone that endures nearly a century later."},
+  {y:1776,cat:"History",t:"The United States Declaration of Independence is adopted",b:"The Continental Congress adopted the founding document of a new nation, asserting that all men are created equal and that governments derive their power from the consent of the governed."},
+  {y:1961,cat:"Space",t:"Yuri Gagarin becomes the first human in space",b:"The Soviet cosmonaut completed one orbit of Earth aboard Vostok 1, spending 108 minutes in space and becoming an international hero whose achievement launched the space race into a new phase."},
+  {y:1886,cat:"Culture",t:"The Statue of Liberty arrives in New York Harbor",b:"A gift from France, the statue arrived in pieces aboard a French frigate. Once assembled and dedicated, Lady Liberty became the defining symbol of American ideals and welcomed generations of immigrants."},
+  {y:1990,cat:"Technology",t:"Tim Berners-Lee publishes his proposal for the World Wide Web",b:"Working at CERN, Berners-Lee submitted a document outlining a global hypertext system that would become the foundation of the modern internet and transform how information is shared worldwide."},
+  {y:1955,cat:"Civil Rights",t:"Rosa Parks refuses to give up her seat on a Montgomery bus",b:"Her quiet act of defiance led to a 381-day boycott of the Montgomery bus system and became one of the most powerful catalysts of the American civil rights movement."},
+  {y:1920,cat:"History",t:"Women in the United States gain the right to vote",b:"The 19th Amendment to the Constitution was ratified, guaranteeing women the right to vote after decades of activism. It was a landmark moment in the long arc of democratic expansion."},
+  {y:1969,cat:"Culture",t:"Woodstock Music Festival begins in upstate New York",b:"An estimated 400,000 people gathered on Max Yasgur's farm for three days of music, mud, and counterculture. The festival became a defining moment of a generation and a symbol of the 1960s."},
+  {y:1947,cat:"Science",t:"Chuck Yeager breaks the sound barrier",b:"Flying the Bell X-1 experimental aircraft over the California desert, Yeager became the first person to travel faster than the speed of sound, opening a new frontier in aviation and aerospace."},
+  {y:1963,cat:"History",t:"Martin Luther King Jr. delivers his 'I Have a Dream' speech",b:"Standing before 250,000 people at the Lincoln Memorial, King delivered one of the most important speeches in American history, articulating a vision of racial equality that continues to inspire."},
+  {y:2004,cat:"Technology",t:"Facebook launches at Harvard University",b:"Mark Zuckerberg launched a social network for Harvard students that would grow into a global platform with billions of users, fundamentally altering how people connect, communicate, and consume information."},
+  {y:1977,cat:"Culture",t:"Star Wars is released in theaters",b:"George Lucas's space opera opened to modest expectations and became one of the highest-grossing films of all time, launching a cultural phenomenon that continues more than four decades later."},
+  {y:1905,cat:"Science",t:"Albert Einstein publishes his special theory of relativity",b:"In a single year, Einstein published four papers that transformed physics forever, including the special theory of relativity and the famous equation E equals mc squared."},
+  {y:1983,cat:"Technology",t:"The internet's TCP/IP protocol goes live",b:"On January 1, all networked computers switched to the TCP/IP communications standard, creating the technical foundation of the modern internet and beginning the era of interconnected global networks."},
+  {y:1944,cat:"History",t:"D-Day: Allied forces land on the beaches of Normandy",b:"Operation Overlord, the largest seaborne invasion in history, began in the early hours of June 6. More than 156,000 Allied troops crossed the English Channel, marking the turning point of World War II in Western Europe."},
+  {y:1961,cat:"History",t:"The Berlin Wall is constructed overnight",b:"East German forces began erecting barriers between East and West Berlin, separating families and symbolizing the ideological divide of the Cold War in the most visible and tragic way possible."},
+  {y:1971,cat:"Technology",t:"The first email is sent",b:"Ray Tomlinson sent the first networked electronic message between two computers sitting side by side, choosing the at sign to separate the user name from the computer name, a convention that has endured ever since."},
+  {y:1992,cat:"Technology",t:"The first text message is sent",b:"Engineer Neil Papworth sent the message 'Merry Christmas' from a computer to a colleague's mobile phone, initiating the era of SMS communication that would fundamentally change how people keep in touch."},
+  {y:1995,cat:"Technology",t:"Amazon opens for business",b:"Jeff Bezos launched an online bookstore from his garage in Bellevue, Washington. Within a year it was selling books across the United States and in 45 other countries, beginning the transformation of retail."},
+  {y:1998,cat:"Technology",t:"Google is founded in a garage in Menlo Park",b:"Larry Page and Sergey Brin incorporated their search engine company, which had grown out of a Stanford research project. Within years, Google's name became a verb synonymous with searching for information."},
+  {y:1948,cat:"History",t:"The State of Israel is declared",b:"David Ben-Gurion proclaimed the establishment of the State of Israel just minutes before the British Mandate expired, setting in motion one of the most consequential geopolitical developments of the 20th century."},
+  {y:1981,cat:"Technology",t:"IBM introduces the personal computer",b:"The IBM PC went on sale to the public, bringing computing power into homes and offices. The machine, running Microsoft's MS-DOS operating system, helped launch the personal computing revolution."},
+  {y:1991,cat:"History",t:"The Soviet Union officially dissolves",b:"The USSR ceased to exist on December 25, 1991, when Mikhail Gorbachev resigned as president. Fifteen new independent nations emerged, ending the Cold War and reshaping the world's geopolitical landscape."},
+  {y:1893,cat:"Culture",t:"The World's Columbian Exposition opens in Chicago",b:"The World's Fair celebrated the 400th anniversary of Columbus's voyage and introduced millions of visitors to the alternating current electrical system, the dishwasher, and a massive new ride: the Ferris wheel."},
+  {y:1927,cat:"Culture",t:"Charles Lindbergh completes the first solo transatlantic flight",b:"The 25-year-old pilot landed the Spirit of St. Louis in Paris after 33.5 hours and 3,600 miles, becoming an instant global celebrity and proving that regular passenger air travel across the ocean was possible."},
+  {y:1950,cat:"History",t:"The Korean War begins",b:"North Korean forces crossed the 38th parallel, beginning a three-year conflict that drew in United Nations forces led by the United States and ended in an armistice that has left the peninsula technically at war ever since."},
+  {y:2001,cat:"History",t:"Wikipedia is launched",b:"Jimmy Wales and Larry Sanger launched a free, collaborative encyclopedia that would grow to contain over 60 million articles in hundreds of languages and become one of the world's most visited websites."},
+  {y:2007,cat:"Technology",t:"Apple unveils the first iPhone",b:"Steve Jobs introduced a device that combined a phone, an iPod, and an internet communicator, fundamentally reinventing the mobile phone and launching the smartphone era that transformed modern life."},
+  {y:1975,cat:"Technology",t:"Bill Gates and Paul Allen found Microsoft",b:"The duo founded their software company on the belief that a computer would sit on every desk and in every home, a vision that seemed fantastical at the time and became the foundation of a global technology empire."},
+  {y:1865,cat:"History",t:"The 13th Amendment to the U.S. Constitution is ratified",b:"The amendment formally abolished slavery throughout the United States, fulfilling the promise of the Emancipation Proclamation and marking a transformative moment in American history."},
+  {y:1897,cat:"Science",t:"The electron is discovered by J.J. Thomson",b:"Thomson's cathode ray experiments led him to conclude that atoms contained smaller, negatively charged particles, overturning centuries of belief that atoms were the smallest unit of matter."},
+  {y:1930,cat:"Culture",t:"The first World Cup of football is held in Uruguay",b:"Uruguay hosted and won the inaugural FIFA World Cup, with 13 nations participating. The tournament has since grown into the most-watched sporting event on Earth, followed by billions every four years."},
+  {y:1954,cat:"History",t:"The Supreme Court rules in Brown v. Board of Education",b:"The unanimous decision declared racial segregation in public schools unconstitutional, overturning Plessy v. Ferguson and becoming one of the most significant legal milestones in American civil rights history."},
+  {y:1957,cat:"Space",t:"The Soviet Union launches Sputnik, the first artificial satellite",b:"Sputnik's beeping radio signal, audible to amateur operators worldwide, sent shockwaves through the West and ignited the space race, ultimately leading to the Apollo moon landings a decade later."},
+  {y:2020,cat:"Science",t:"The first COVID-19 vaccines receive emergency authorization",b:"Within less than a year of the virus's identification, vaccines developed using novel mRNA technology received emergency use authorization, representing one of the fastest and most consequential scientific achievements in history."},
+  {y:1906,cat:"History",t:"The San Francisco earthquake devastates the city",b:"A magnitude 7.9 earthquake and subsequent fires destroyed much of San Francisco, killing an estimated 3,000 people and leaving 225,000 homeless, becoming one of the deadliest natural disasters in U.S. history."},
+  {y:1937,cat:"Culture",t:"Snow White and the Seven Dwarfs premieres as the first feature-length animated film",b:"Disney's ambitious gamble on a full-length animated feature was called 'Disney's Folly' during production. Its success transformed storytelling, the film industry, and the very idea of what animation could achieve."},
+  {y:1914,cat:"History",t:"World War I begins with Austria-Hungary's declaration of war on Serbia",b:"What started as a regional conflict in the Balkans escalated within weeks into a global war involving all the major powers of Europe, ultimately killing over 20 million people and reshaping the world's political map."},
+  {y:1966,cat:"Culture",t:"The Beatles play their final concert at Candlestick Park",b:"The Fab Four played their last public concert before a crowd of 25,000 in San Francisco, marking the end of touring and the beginning of their most creatively ambitious studio-only period."},
+  {y:2008,cat:"History",t:"Barack Obama is elected the 44th President of the United States",b:"Obama became the first African American to be elected president, a milestone that drew comparisons to the civil rights movement and generated historic voter turnout across the country."},
+  {y:1961,cat:"Science",t:"The first human heart pacemaker is implanted",b:"Wilson Greatbatch accidentally installed a resistor in a device and discovered it produced electrical pulses that could regulate a heartbeat, leading to the first fully implantable cardiac pacemaker."},
+  {y:1947,cat:"History",t:"India and Pakistan gain independence from Britain",b:"After decades of colonial rule, the Indian subcontinent was partitioned into two independent nations in a historic but turbulent transfer of power that triggered one of the largest mass migrations in human history."},
+  {y:2003,cat:"Science",t:"The Human Genome Project is completed",b:"Scientists announced the completion of a map of the entire human genome, providing a reference for the roughly 3 billion base pairs of DNA that make up human genetic code and opening a new era of medicine."},
+  {y:1970,cat:"Science",t:"Earth Day is celebrated for the first time",b:"Twenty million Americans participated in the inaugural Earth Day on April 22, launching the modern environmental movement and contributing to the creation of the EPA and landmark environmental legislation."},
+  {y:1984,cat:"Culture",t:"Apple introduces the Macintosh personal computer",b:"A single television advertisement aired during the Super Bowl announced a computer that brought graphical user interfaces to a mass audience, setting the design standard for personal computing for decades."},
+  {y:1932,cat:"Science",t:"Amelia Earhart becomes the first woman to fly solo across the Atlantic",b:"Flying from Newfoundland to Northern Ireland in under 15 hours, Earhart broke records and barriers simultaneously, becoming a global symbol of courage and the expanding possibilities for women."},
+  {y:1919,cat:"History",t:"The Treaty of Versailles is signed, ending World War I",b:"The peace treaty formally ended the war but imposed harsh conditions on Germany that many historians argue planted the seeds for the even more destructive conflict that would follow twenty years later."},
+  {y:2010,cat:"Technology",t:"Instagram is launched",b:"Kevin Systrom and Mike Krieger launched a photo-sharing app that would reach one billion users within a decade, transform visual culture, create a new class of influencers, and reshape how brands connect with consumers."},
+  {y:1954,cat:"Culture",t:"The first mass vaccination for polio begins in the United States",b:"Following Jonas Salk's successful development of a polio vaccine, the largest field trial in medical history began, eventually leading to the near-eradication of a disease that had paralyzed hundreds of thousands of children each year."},
+  {y:1945,cat:"History",t:"The atomic bomb is dropped on Hiroshima",b:"The United States dropped the first nuclear weapon used in warfare on the Japanese city of Hiroshima, killing approximately 80,000 people instantly. The event ushered in the nuclear age and changed the nature of warfare forever."},
+  {y:1989,cat:"Technology",t:"Tim Berners-Lee submits his proposal for the World Wide Web at CERN",b:"The quiet submission of a document titled 'Information Management: A Proposal' was met with the note 'Vague but exciting' by his supervisor, setting in motion a project that would become the defining technology of our era."},
+  {y:1962,cat:"History",t:"The Cuban Missile Crisis begins",b:"American reconnaissance planes photographed Soviet nuclear missile installations in Cuba, beginning 13 days of tense negotiations that brought the world closer to nuclear war than at any other point in history."},
+  {y:2004,cat:"Science",t:"NASA's Mars rovers Spirit and Opportunity begin exploring the planet",b:"The twin rovers touched down on Mars and began transmitting photographs of the Martian surface, providing evidence of past water and reigniting scientific and public interest in the red planet."},
+  {y:1975,cat:"History",t:"The Vietnam War ends with the fall of Saigon",b:"As North Vietnamese forces entered Saigon, a frantic evacuation of American personnel and South Vietnamese allies took place. The images defined the end of America's longest war up to that point."},
+  {y:1948,cat:"Culture",t:"The first NASCAR race is held at Daytona Beach",b:"Bill France organized the first race of the newly formed National Association for Stock Car Auto Racing on a beach-road course at Daytona, laying the foundation for what would become one of America's most popular sports."},
+  {y:2011,cat:"History",t:"Osama bin Laden is killed in a raid in Pakistan",b:"U.S. Navy SEALs conducted a raid in Abbottabad and killed the founder of al-Qaeda, closing a chapter of the war on terror that had begun nearly a decade earlier with the September 11 attacks."},
+  {y:1953,cat:"Science",t:"Edmund Hillary and Tenzing Norgay summit Mount Everest",b:"The New Zealand mountaineer and Sherpa guide became the first people to reach the summit of the world's highest mountain, completing a quest that had already claimed many lives."},
+  {y:2000,cat:"Technology",t:"The Y2K bug fails to cause the predicted global computer chaos",b:"After years of concern that computer systems would fail when dates rolled over to the year 2000, New Year's Day passed largely without incident, a testament to years of preparatory work by technicians worldwide."},
+  {y:1936,cat:"Culture",t:"The first modern Olympic Games of the television age open in Berlin",b:"The 1936 Berlin Olympics were the first to be broadcast on closed-circuit television and the first to use the torch relay, though they are most remembered for Jesse Owens's four gold medals."},
+  {y:1972,cat:"History",t:"President Nixon visits China, opening diplomatic relations",b:"Nixon's historic visit ended more than two decades of diplomatic isolation between the United States and the People's Republic of China, one of the most consequential geopolitical shifts of the Cold War era."},
+  {y:1996,cat:"Science",t:"Dolly the sheep becomes the first mammal cloned from an adult cell",b:"Scientists at the Roslin Institute in Scotland announced the birth of Dolly, a sheep cloned from a mammary cell of an adult ewe, opening new possibilities and profound ethical debates in genetics and medicine."},
+  {y:1924,cat:"Culture",t:"The first Winter Olympics are held in Chamonix, France",b:"The inaugural Winter Games brought together 258 athletes from 16 nations to compete in 16 events, establishing a tradition that would grow into one of the world's most-watched sporting spectacles."},
+  {y:1960,cat:"Science",t:"The first oral contraceptive pill is approved by the FDA",b:"Enovid's approval gave women unprecedented control over reproduction, contributing to profound social changes including the expansion of women in the workforce and shifts in family planning across the developed world."},
+  {y:1958,cat:"Culture",t:"NASA is established by President Eisenhower",b:"In response to the Soviet Union's Sputnik launch, Eisenhower signed the National Aeronautics and Space Act, creating the civilian space agency that would land humans on the Moon eleven years later."},
+  {y:1948,cat:"History",t:"The Marshall Plan is enacted to rebuild postwar Europe",b:"The United States committed over 12 billion dollars to rebuild the war-devastated economies of Western Europe, one of the most successful foreign aid programs in history and a cornerstone of the postwar international order."},
+  {y:2015,cat:"History",t:"The Paris Agreement on climate change is adopted",b:"Nearly 200 nations signed a landmark agreement to limit global temperature rise, representing the first time the world community had committed collectively to addressing the long-term threat of climate change."},
+  {y:1938,cat:"Science",t:"Nuclear fission is discovered by Hahn and Strassmann",b:"German chemists Otto Hahn and Fritz Strassmann discovered that uranium atoms could be split, releasing enormous energy. The discovery led directly to both nuclear weapons and nuclear power generation."},
+  {y:1965,cat:"History",t:"The Voting Rights Act is signed into law",b:"President Johnson signed legislation banning discriminatory voting practices that had disenfranchised Black Americans for a century, a pivotal achievement of the civil rights movement."},
+  {y:1991,cat:"Technology",t:"The World Wide Web becomes publicly available",b:"Tim Berners-Lee made the web publicly accessible outside CERN, beginning the exponential growth of the internet as a public utility and communication medium that would transform nearly every aspect of modern life."},
+  {y:2016,cat:"Science",t:"Gravitational waves are detected for the first time",b:"Scientists announced the first direct detection of gravitational waves produced by two merging black holes, confirming a major prediction of Einstein's general theory of relativity a century after it was made."},
+  {y:1959,cat:"History",t:"Hawaii becomes the 50th state of the United States",b:"President Eisenhower signed the proclamation admitting Hawaii as the 50th state, two years after Alaska became the 49th. For the first time, the American flag would bear 50 stars."},
+  {y:1974,cat:"History",t:"President Nixon resigns following the Watergate scandal",b:"Nixon became the first and only U.S. president to resign from office, announcing his decision in a televised address to the nation following months of hearings and the revelation of White House tape recordings."},
+  {y:1952,cat:"Science",t:"The first hydrogen bomb is detonated by the United States",b:"The Ivy Mike test in the Pacific produced an explosion 450 times more powerful than the Hiroshima bomb, escalating the nuclear arms race and demonstrating humanity's capacity for previously unimaginable destruction."},
+  {y:1986,cat:"History",t:"The Space Shuttle Challenger disintegrates 73 seconds after launch",b:"The shuttle broke apart over the Atlantic Ocean, killing all seven crew members including teacher Christa McAuliffe. The disaster grounded the shuttle program for nearly three years and reshaped NASA's safety culture."},
+  {y:1973,cat:"History",t:"The United States withdraws combat troops from Vietnam",b:"Following the Paris Peace Accords, the last American combat troops left Vietnam, ending U.S. military involvement in the most divisive conflict in American history since the Civil War."},
+  {y:1906,cat:"Culture",t:"The first radio broadcast of a voice transmission is made",b:"Reginald Fessenden transmitted the first audio radio broadcast on Christmas Eve, including a violin solo and a reading from the Bible, stunning radio operators on ships who expected only Morse code."},
+  {y:1950,cat:"Culture",t:"Charles M. Schulz publishes the first Peanuts comic strip",b:"The strip featuring a boy named Charlie Brown and his beagle Snoopy debuted in seven newspapers and went on to become the most widely syndicated comic strip in history, running for nearly 50 years."},
+  {y:1867,cat:"History",t:"Canada becomes a self-governing dominion",b:"The British North America Act united the provinces of Ontario, Quebec, New Brunswick, and Nova Scotia into the Dominion of Canada, creating one of the world's first federal parliamentary systems."},
+  {y:1945,cat:"History",t:"The United Nations is officially established",b:"The UN Charter entered into force with ratification by the five permanent members of the Security Council and a majority of other signatories, establishing the primary international organization for maintaining peace."},
+  {y:1922,cat:"Science",t:"The discovery of Tutankhamun's tomb is announced",b:"Howard Carter and Lord Carnarvon discovered the largely intact tomb of the boy pharaoh in the Valley of the Kings, revealing treasures that gave the world an extraordinary window into ancient Egyptian civilization."},
+  {y:1961,cat:"History",t:"The Peace Corps is established by President Kennedy",b:"Kennedy signed the executive order creating the Peace Corps, which has since sent more than 240,000 Americans to work in developing nations, one of the most enduring legacies of his administration."},
+  {y:1969,cat:"History",t:"The Stonewall riots mark the beginning of the modern LGBTQ rights movement",b:"Following a police raid on the Stonewall Inn in New York City, several days of protests by the LGBTQ community sparked an organized movement for equal rights that has reshaped laws and attitudes across the world."},
+  {y:2003,cat:"History",t:"The United States invades Iraq, beginning the Iraq War",b:"Coalition forces led by the United States launched a military campaign to remove Saddam Hussein from power, a conflict that would last years, cost trillions of dollars, and fundamentally reshape the Middle East."},
+  {y:1963,cat:"History",t:"President John F. Kennedy is assassinated in Dallas, Texas",b:"Kennedy was shot while riding in a presidential motorcade through Dealey Plaza, a moment that shocked the world and marked the end of an era of American idealism. The Warren Commission concluded Lee Harvey Oswald acted alone."},
+  {y:1966,cat:"Science",t:"The first soft landing on the Moon is achieved by the Soviet Luna 9",b:"The unmanned spacecraft successfully landed on the lunar surface and transmitted photographs back to Earth, proving that the Moon's surface could support a spacecraft, a crucial step toward a crewed landing."},
+  {y:1960,cat:"History",t:"The year seventeen African nations gain independence",b:"1960 is known as the Year of Africa, as a wave of decolonization swept the continent. Seventeen nations declared independence from European powers, fundamentally reshaping the map and politics of Africa."},
+  {y:1919,cat:"Culture",t:"Prohibition begins in the United States with the 18th Amendment",b:"The nationwide ban on the production and sale of alcohol took effect, giving rise to speakeasies, bootleggers, and organized crime. It lasted until 1933, widely considered one of the great policy failures in American history."},
+  {y:1967,cat:"History",t:"The Six-Day War reshapes the Middle East",b:"Israel defeated Egypt, Jordan, and Syria in six days, tripling the territory under its control and creating territorial and political realities that continue to define the Middle East conflict more than half a century later."},
+  {y:1953,cat:"History",t:"An armistice is signed ending active hostilities in the Korean War",b:"After three years of fighting and more than 36,000 American deaths, an armistice was signed at Panmunjom establishing a demilitarized zone that has divided the Korean Peninsula ever since."},
+  {y:2004,cat:"History",t:"A massive tsunami strikes Southeast Asia on December 26",b:"One of the deadliest natural disasters in recorded history killed over 227,000 people in fourteen countries, triggering a massive international humanitarian response and improvements in tsunami warning systems."},
+  {y:1944,cat:"Culture",t:"The Bretton Woods Agreement establishes the postwar monetary order",b:"Representatives of 44 Allied nations met in New Hampshire to create a new international monetary system, establishing the International Monetary Fund and World Bank and setting the dollar as the world's reserve currency."},
+  {y:1979,cat:"History",t:"Margaret Thatcher becomes the first female Prime Minister of the United Kingdom",b:"The Conservative leader's election victory made her the first woman to lead a major Western democracy, beginning an 11-year tenure that would transform Britain's economy and politics."},
+  {y:1987,cat:"History",t:"The Intermediate-Range Nuclear Forces Treaty is signed",b:"Reagan and Gorbachev signed the first treaty to eliminate an entire class of nuclear weapons, a landmark arms reduction agreement that signaled a thaw in Cold War tensions."},
+  {y:1971,cat:"History",t:"The 26th Amendment lowers the U.S. voting age to 18",b:"Following years of argument that those old enough to be drafted and die for their country should be old enough to vote, the amendment was ratified in just 100 days, the fastest ratification in U.S. history."},
+  {y:1923,cat:"Culture",t:"Time magazine publishes its first issue",b:"Henry Luce and Briton Hadden launched a weekly news magazine designed to be read in 30 minutes, creating a format that would define how millions of Americans consumed news for most of the 20th century."},
+  {y:1985,cat:"Technology",t:"Microsoft releases Windows 1.0",b:"The graphical operating system brought point-and-click computing to IBM-compatible personal computers, beginning Microsoft's dominance of the personal computer software market that would define the tech industry for decades."},
+  {y:2012,cat:"Science",t:"The Higgs boson particle is confirmed at CERN",b:"Scientists at the Large Hadron Collider announced the discovery of a particle consistent with the long-sought Higgs boson, confirming a key element of the Standard Model of particle physics after nearly 50 years of searching."},
+  {y:1917,cat:"History",t:"The United States enters World War I",b:"After years of attempted neutrality, the U.S. declared war on Germany following the resumption of unrestricted submarine warfare and the revelation of the Zimmermann Telegram, a German plot to bring Mexico into the war."}
+];
+
+function getDayOfYear(date) {
+  const start = new Date(date.getFullYear(), 0, 0);
+  return Math.floor((date - start) / 86400000);
+}
+function formatDate(date) {
+  return date.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric',year:'numeric'});
+}
+
+const today = new Date(); today.setHours(0,0,0,0);
+let offset = 0;
+
+function render() {
+  const d = new Date(today); d.setDate(d.getDate() + offset);
+  const day = getDayOfYear(d);
+  const idx = ((day - 1) % events.length + events.length) % events.length;
+  const ev = events[idx];
+  document.getElementById('dateLabel').textContent = formatDate(d);
+  document.getElementById('categoryTag').textContent = ev.cat;
+  document.getElementById('yearBadge').textContent = ev.y;
+  document.getElementById('historyTitle').textContent = ev.t;
+  document.getElementById('historyBody').textContent = ev.b;
+  document.getElementById('prevBtn').disabled = offset <= -30;
+  document.getElementById('nextBtn').disabled = offset >= 0;
+  const w = document.getElementById('contentWrap');
+  w.style.animation = 'none'; w.offsetHeight; w.style.animation = '';
+}
+
+function changeDay(dir) { offset += dir; render(); }
+render();
+</script>
+</body>
+</html>

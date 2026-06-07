@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Momentum - Vocabulary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.word { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,6vw,4rem); font-weight:300; letter-spacing:0.04em; color:var(--ink); text-align:center; margin-bottom:0.3rem; }
+.part-of-speech { font-family:'Jost',sans-serif; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem; text-align:center; }
+.pronunciation { font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; color:var(--muted); text-align:center; margin-bottom:2rem; }
+.definition { font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,2.5vw,1.4rem); font-weight:300; line-height:1.6; color:var(--ink); text-align:center; max-width:580px; margin-bottom:2rem; }
+.example-label { font-size:0.58rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--muted); margin-bottom:0.8rem; text-align:center; }
+.example { font-family:'Cormorant Garamond',serif; font-size:clamp(1rem,2.2vw,1.25rem); font-style:italic; font-weight:300; line-height:1.6; color:var(--muted); text-align:center; max-width:560px; border-left:2px solid var(--accent-dim); padding:0.6rem 1.2rem; }
+</style>
+</head>
+<body>
+<div class="top-rule"></div>
+<p class="site-tag">Daily Momentum</p>
+<nav>
+  <a href="index.html" class="nav-link">Motivation</a><span class="nav-sep">|</span>
+  <a href="jokes.html" class="nav-link">Dad Jokes</a><span class="nav-sep">|</span>
+  <a href="vocabulary.html" class="nav-link active">Vocabulary</a><span class="nav-sep">|</span>
+  <a href="horoscope.html" class="nav-link">Horoscope</a><span class="nav-sep">|</span>
+  <a href="riddle.html" class="nav-link">Riddle</a><span class="nav-sep">|</span>
+  <a href="history.html" class="nav-link">This Day</a><span class="nav-sep">|</span>
+  <a href="crossword.html" class="nav-link">Crossword</a><span class="nav-sep">|</span>
+  <a href="sudoku.html" class="nav-link">Sudoku</a>
+</nav>
+<div class="divider"></div>
+<main>
+  <div class="day-nav">
+    <button class="day-nav-btn" id="prevBtn" onclick="changeDay(-1)">&#8592;</button>
+    <span class="date-label" id="dateLabel"></span>
+    <button class="day-nav-btn" id="nextBtn" onclick="changeDay(1)">&#8594;</button>
+  </div>
+  <div class="content-wrap" id="contentWrap">
+    <p class="word" id="word"></p>
+    <p class="part-of-speech" id="pos"></p>
+    <p class="pronunciation" id="pronunciation"></p>
+    <p class="definition" id="definition"></p>
+    <p class="example-label">Used in a sentence</p>
+    <p class="example" id="example"></p>
+  </div>
+</main>
+<footer>
+  <a href="https://www.linkedin.com/in/jebbreese/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    Connect on LinkedIn
+  </a>
+</footer>
+<a href="https://paypal.me/jebbreese" class="donate-btn" target="_blank" rel="noopener noreferrer">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+  Buy me a Dutch Bros
+</a>
+<script>
+const words = [
+  {w:"Ephemeral",pos:"adjective",pr:"/ih-FEM-er-ul/",d:"Lasting for a very short time; transitory.",e:"The morning frost was ephemeral, disappearing as soon as the sun rose above the hills."},
+  {w:"Perspicacious",pos:"adjective",pr:"/pur-spih-KAY-shus/",d:"Having a ready insight into things; shrewd and discerning.",e:"The perspicacious analyst spotted the flaw in the data before anyone else on the team."},
+  {w:"Sanguine",pos:"adjective",pr:"/SANG-gwin/",d:"Optimistic or positive, especially in a difficult situation.",e:"Despite the project setbacks, she remained sanguine about the team's ability to meet the deadline."},
+  {w:"Laconic",pos:"adjective",pr:"/luh-KON-ik/",d:"Using very few words; brief and to the point.",e:"His laconic reply told us everything we needed to know without wasting a single word."},
+  {w:"Equanimity",pos:"noun",pr:"/ee-kwuh-NIM-ih-tee/",d:"Mental calmness and composure, especially in difficult situations.",e:"She handled the unexpected criticism with remarkable equanimity, thanking the reviewer for the feedback."},
+  {w:"Loquacious",pos:"adjective",pr:"/loh-KWAY-shus/",d:"Tending to talk a great deal; talkative.",e:"The loquacious host kept the evening lively with a seemingly endless supply of stories."},
+  {w:"Recondite",pos:"adjective",pr:"/REK-un-dyte/",d:"Not known by many people; obscure or abstruse.",e:"The professor's lecture on recondite medieval dialects drew a surprisingly large crowd."},
+  {w:"Propitious",pos:"adjective",pr:"/pruh-PISH-us/",d:"Giving or indicating a good chance of success; favorable.",e:"The clear skies and calm waters made for a propitious start to their voyage."},
+  {w:"Tenacious",pos:"adjective",pr:"/teh-NAY-shus/",d:"Holding firmly to something; persistent and determined.",e:"Her tenacious pursuit of the truth eventually uncovered the real story behind the company's collapse."},
+  {w:"Mellifluous",pos:"adjective",pr:"/meh-LIF-loo-us/",d:"Sweet or musical in sound; pleasingly smooth and rich.",e:"The mellifluous voice of the narrator made even the most complex passages easy to follow."},
+  {w:"Circumspect",pos:"adjective",pr:"/SUR-kum-spekt/",d:"Wary and unwilling to take risks; careful and prudent.",e:"A circumspect investor reviews every clause before signing any agreement."},
+  {w:"Enervate",pos:"verb",pr:"/EN-ur-vayt/",d:"To make someone feel drained of energy or vitality.",e:"The relentless heat of the afternoon enervated the construction crew before the day was half over."},
+  {w:"Garrulous",pos:"adjective",pr:"/GAIR-uh-lus/",d:"Excessively talkative, especially on trivial matters.",e:"The garrulous neighbor could turn a quick greeting into a two-hour conversation."},
+  {w:"Inveterate",pos:"adjective",pr:"/in-VET-ur-it/",d:"Having a habit or activity so firmly established it is unlikely to change.",e:"An inveterate reader, she always had three books going at once."},
+  {w:"Pellucid",pos:"adjective",pr:"/peh-LOO-sid/",d:"Translucently clear; easily understood.",e:"The pellucid prose of the report made the technical findings accessible to every reader."},
+  {w:"Querulous",pos:"adjective",pr:"/KWER-yuh-lus/",d:"Complaining in a petulant or whining manner.",e:"The querulous customer at the counter complained about everything, from the wait time to the lighting."},
+  {w:"Verdant",pos:"adjective",pr:"/VUR-dunt/",d:"Green with grass or other rich vegetation.",e:"After two weeks of rain, the hills were verdant and full of new growth."},
+  {w:"Alacrity",pos:"noun",pr:"/uh-LAK-rih-tee/",d:"Brisk and cheerful readiness.",e:"She accepted the new assignment with alacrity, staying late to begin her research that very evening."},
+  {w:"Cogent",pos:"adjective",pr:"/KOH-jent/",d:"Clear, logical, and convincing in argument.",e:"His cogent argument silenced every objection at the board meeting."},
+  {w:"Dilettante",pos:"noun",pr:"/DIL-ih-tahnt/",d:"A person who cultivates an interest in something without serious commitment.",e:"He approached painting as a dilettante, dabbling on weekends but never pursuing serious study."},
+  {w:"Ebullient",pos:"adjective",pr:"/ih-BUL-yunt/",d:"Cheerful and full of energy; exuberant.",e:"The ebullient host greeted every guest at the door as if they were the most welcome person in the world."},
+  {w:"Fastidious",pos:"adjective",pr:"/fa-STID-ee-us/",d:"Very attentive to accuracy and detail; meticulous.",e:"The fastidious editor caught three inconsistencies the entire team had missed."},
+  {w:"Grandiloquent",pos:"adjective",pr:"/gran-DIL-uh-kwent/",d:"Pompous or extravagant in language, style, or manner.",e:"The grandiloquent speech impressed no one and left the audience restless."},
+  {w:"Hapless",pos:"adjective",pr:"/HAP-lis/",d:"Unfortunate; having no luck.",e:"The hapless traveler arrived at the airport only to discover her flight had left an hour earlier."},
+  {w:"Insouciant",pos:"adjective",pr:"/in-SOO-see-unt/",d:"Showing a casual lack of concern; carefree.",e:"His insouciant attitude toward the deadline frustrated the rest of the team."},
+  {w:"Jocular",pos:"adjective",pr:"/JOK-yuh-lur/",d:"Fond of or characterized by joking; humorous.",e:"The jocular coach kept morale high even during the team's longest losing streak."},
+  {w:"Luminous",pos:"adjective",pr:"/LOO-mih-nus/",d:"Full of light; bright and glowing; clear and easily understood.",e:"Her luminous explanation of the data made the entire strategy immediately clear."},
+  {w:"Munificent",pos:"adjective",pr:"/myoo-NIF-ih-sent/",d:"More generous than is usual or necessary; lavishly generous.",e:"The munificent donor funded three new laboratories at the university without fanfare."},
+  {w:"Nonchalant",pos:"adjective",pr:"/non-shuh-LAHNT/",d:"Feeling or appearing casually calm and relaxed.",e:"She strolled into the final interview with a nonchalant ease that immediately impressed the panel."},
+  {w:"Obsequious",pos:"adjective",pr:"/ub-SEE-kwee-us/",d:"Excessively eager to serve, please, or obey; servile.",e:"The obsequious assistant agreed with everything the manager said, even when it was clearly wrong."},
+  {w:"Penurious",pos:"adjective",pr:"/peh-NYOOR-ee-us/",d:"Extremely poor; not wanting to spend money.",e:"Despite his penurious upbringing, he never lost his generosity toward those in need."},
+  {w:"Quixotic",pos:"adjective",pr:"/kwik-SOT-ik/",d:"Exceedingly idealistic and unrealistic; impractical.",e:"His quixotic plan to revive the town's economy through a traveling theater company somehow worked."},
+  {w:"Reticent",pos:"adjective",pr:"/RET-ih-sent/",d:"Not revealing one's thoughts or feelings readily; reserved.",e:"The reticent witness offered only the minimum details required by each question."},
+  {w:"Sagacious",pos:"adjective",pr:"/suh-GAY-shus/",d:"Having or showing keen mental discernment and good judgment; wise.",e:"The sagacious mentor saw potential in her long before anyone else did."},
+  {w:"Truculent",pos:"adjective",pr:"/TRUK-yuh-lent/",d:"Eager or quick to argue or fight; aggressively defiant.",e:"The truculent negotiator rejected every compromise before any offer could be properly evaluated."},
+  {w:"Umbrage",pos:"noun",pr:"/UM-brij/",d:"Offense or annoyance taken at another's actions.",e:"She took umbrage at the suggestion that her research had not been thoroughly reviewed."},
+  {w:"Verbose",pos:"adjective",pr:"/vur-BOHS/",d:"Using more words than necessary; long-winded.",e:"The verbose proposal buried its key recommendations in twelve pages of unnecessary background."},
+  {w:"Wistful",pos:"adjective",pr:"/WIST-ful/",d:"Having or showing a feeling of vague or regretful longing.",e:"She gave the old photograph a wistful glance before placing it back in the drawer."},
+  {w:"Xenial",pos:"adjective",pr:"/ZEE-nee-ul/",d:"Of or relating to hospitality toward guests; hospitable.",e:"The xenial innkeeper ensured every traveler felt welcomed before they had even stepped through the door."},
+  {w:"Zealous",pos:"adjective",pr:"/ZEL-us/",d:"Having or showing great energy or enthusiasm in pursuit of a cause or objective.",e:"The zealous intern arrived an hour early each morning and stayed well after everyone else had left."},
+  {w:"Acumen",pos:"noun",pr:"/AK-yoo-men/",d:"The ability to make good judgments and quick decisions, typically in a particular domain.",e:"Her business acumen became evident when the division she managed doubled its revenue in eighteen months."},
+  {w:"Benevolent",pos:"adjective",pr:"/beh-NEV-uh-lent/",d:"Well-meaning and kindly; charitable.",e:"The benevolent board member quietly paid off the organization's remaining debt without seeking recognition."},
+  {w:"Candor",pos:"noun",pr:"/KAN-dur/",d:"The quality of being open and honest in expression; frankness.",e:"His candor during the difficult conversation earned him the trust of the entire team."},
+  {w:"Dexterous",pos:"adjective",pr:"/DEK-stur-us/",d:"Showing or having skill, especially with the hands; adroit.",e:"The dexterous surgeon completed the procedure in half the expected time without a single complication."},
+  {w:"Eloquent",pos:"adjective",pr:"/EL-uh-kwent/",d:"Fluent or persuasive in speaking or writing.",e:"Her eloquent closing statement left the jury without a single doubt."},
+  {w:"Fervent",pos:"adjective",pr:"/FUR-vent/",d:"Having or displaying a passionate intensity.",e:"The fervent advocate spoke for two hours without notes and held the room's complete attention throughout."},
+  {w:"Gregarious",pos:"adjective",pr:"/grih-GAIR-ee-us/",d:"Fond of company; sociable.",e:"The gregarious director made a point of knowing every employee's name within his first week."},
+  {w:"Heuristic",pos:"adjective",pr:"/hyoo-RIS-tik/",d:"Enabling a person to discover or learn something for themselves; a practical problem-solving approach.",e:"The teacher used a heuristic method so students could arrive at the answer through their own reasoning."},
+  {w:"Impeccable",pos:"adjective",pr:"/im-PEK-uh-bul/",d:"In accordance with the highest standards; faultless.",e:"Her impeccable preparation for every client meeting set the standard for the entire department."},
+  {w:"Judicious",pos:"adjective",pr:"/joo-DISH-us/",d:"Having, showing, or done with good judgment or sense.",e:"The judicious manager chose to wait for more data before making any commitments."},
+  {w:"Kinetic",pos:"adjective",pr:"/kih-NET-ik/",d:"Relating to or resulting from motion; lively and active.",e:"The kinetic energy in the room was palpable the moment the founder walked in to announce the acquisition."},
+  {w:"Lucid",pos:"adjective",pr:"/LOO-sid/",d:"Expressed clearly; easy to understand.",e:"Even the most complex provisions in the contract were written in lucid, plain language."},
+  {w:"Meticulous",pos:"adjective",pr:"/meh-TIK-yuh-lus/",d:"Showing great attention to detail or correct behavior.",e:"The meticulous researcher verified every source twice before adding it to the bibliography."},
+  {w:"Nuanced",pos:"adjective",pr:"/NOO-ahnst/",d:"Characterized by subtle shades of meaning or expression.",e:"Her nuanced reading of the treaty revealed implications that a surface-level review had completely missed."},
+  {w:"Ostensible",pos:"adjective",pr:"/ah-STEN-sih-bul/",d:"Stated or appearing to be true, but not necessarily so.",e:"The ostensible reason for the meeting was a quarterly review, but everyone knew a restructuring announcement was coming."},
+  {w:"Pragmatic",pos:"adjective",pr:"/prag-MAT-ik/",d:"Dealing with things sensibly and realistically rather than theoretically.",e:"Her pragmatic approach cut through weeks of debate and produced a working solution in two days."},
+  {w:"Quintessential",pos:"adjective",pr:"/kwin-teh-SEN-shul/",d:"Representing the most perfect or typical example of a quality or class.",e:"He was the quintessential team player, always putting the group's success ahead of his own recognition."},
+  {w:"Resilient",pos:"adjective",pr:"/reh-ZIL-yent/",d:"Able to recover quickly from difficult conditions.",e:"The resilient organization rebuilt its client base within six months of the data breach."},
+  {w:"Stoic",pos:"adjective",pr:"/STOH-ik/",d:"Enduring pain or hardship without showing feelings or complaining.",e:"She remained stoic throughout the hearing, betraying no frustration even as the questions grew hostile."},
+  {w:"Taciturn",pos:"adjective",pr:"/TAS-ih-turn/",d:"Reserved or uncommunicative in speech; saying little.",e:"The taciturn engineer rarely spoke in meetings but wrote the clearest technical documentation anyone had ever read."},
+  {w:"Ubiquitous",pos:"adjective",pr:"/yoo-BIK-wih-tus/",d:"Present, appearing, or found everywhere.",e:"Smartphones have become so ubiquitous that it is difficult to imagine how people navigated cities before them."},
+  {w:"Vivacious",pos:"adjective",pr:"/vih-VAY-shus/",d:"Attractively lively and animated.",e:"The vivacious presenter drew the audience in immediately and held their attention for the entire two-hour session."},
+  {w:"Wary",pos:"adjective",pr:"/WAIR-ee/",d:"Feeling or showing caution about possible dangers or problems.",e:"He was wary of signing any agreement without reviewing the terms with legal counsel first."},
+  {w:"Xenophile",pos:"noun",pr:"/ZEN-uh-fyl/",d:"A person who is attracted to foreign peoples, cultures, or customs.",e:"An avowed xenophile, she spent her vacations learning local dialects and cooking techniques in places most tourists never visited."},
+  {w:"Yielding",pos:"adjective",pr:"/YEEL-ding/",d:"Giving way under pressure; inclined to submit or comply.",e:"Her yielding response to the criticism allowed the conversation to move forward constructively."},
+  {w:"Ardent",pos:"adjective",pr:"/AR-dent/",d:"Enthusiastic or passionate.",e:"The ardent fan arrived three hours early to secure a seat near the front of the auditorium."},
+  {w:"Brevity",pos:"noun",pr:"/BREV-ih-tee/",d:"Concise and exact use of words in writing or speech; shortness of time.",e:"The brevity of his presentation was appreciated by a committee that had already sat through six longer ones."},
+  {w:"Clandestine",pos:"adjective",pr:"/klan-DES-tin/",d:"Kept secret or done secretively, especially because it is illicit.",e:"The clandestine meeting between the two executives was not secret for long."},
+  {w:"Discern",pos:"verb",pr:"/dih-SURN/",d:"To recognize or find out; to perceive or understand with effort.",e:"With experience, she learned to discern genuine enthusiasm from polite compliance in her team."},
+  {w:"Elucidate",pos:"verb",pr:"/ih-LOO-sih-dayt/",d:"To make something clear; to explain.",e:"He took a moment to elucidate the policy before the team began drafting their proposals."},
+  {w:"Forthright",pos:"adjective",pr:"/FORTH-ryt/",d:"Direct and outspoken; straightforward and honest.",e:"Her forthright assessment of the risks saved the company from a costly and avoidable mistake."},
+  {w:"Genial",pos:"adjective",pr:"/JEE-nee-ul/",d:"Friendly and cheerful; affable.",e:"The genial professor made every student feel seen and valued from the first day of class."},
+  {w:"Hallmark",pos:"noun",pr:"/HAWL-mark/",d:"A distinguishing feature, especially one of excellence.",e:"Precision in communication became the hallmark of every proposal that left her department."},
+  {w:"Inquisitive",pos:"adjective",pr:"/in-KWIZ-ih-tiv/",d:"Curious or inquiring; eager for knowledge.",e:"The inquisitive intern asked more thoughtful questions in her first week than most do in a year."},
+  {w:"Jovial",pos:"adjective",pr:"/JOH-vee-ul/",d:"Cheerful and friendly.",e:"His jovial demeanor made even the most routine Monday meetings feel like something worth showing up for."},
+  {w:"Keen",pos:"adjective",pr:"/KEEN/",d:"Having or showing eagerness or enthusiasm; sharp or penetrating in thought.",e:"She had a keen sense for what clients actually needed, as opposed to what they said they wanted."},
+  {w:"Limpid",pos:"adjective",pr:"/LIM-pid/",d:"Clear and easily understood; free of complexity.",e:"The contract was praised for its limpid language, which left no room for misinterpretation."},
+  {w:"Magnanimous",pos:"adjective",pr:"/mag-NAN-ih-mus/",d:"Generous or forgiving, especially toward a rival or less powerful person.",e:"The magnanimous director praised the team publicly and privately whenever credit was due."},
+  {w:"Nascent",pos:"adjective",pr:"/NAY-sent/",d:"Just coming into existence and beginning to display signs of future potential.",e:"The nascent startup had fewer than ten employees but was already disrupting a billion-dollar industry."},
+  {w:"Opulent",pos:"adjective",pr:"/OP-yoo-lent/",d:"Ostentatiously rich and luxurious; wealthy.",e:"The opulent conference hall was a striking contrast to the austerity of the company's usual office space."},
+  {w:"Paramount",pos:"adjective",pr:"/PAIR-uh-mownt/",d:"More important than anything else; supreme.",e:"Clear communication was paramount on a project with teams operating across four time zones."},
+  {w:"Quintessence",pos:"noun",pr:"/kwin-TES-ents/",d:"The most perfect or typical example of a quality or class.",e:"Her calm under pressure was the quintessence of professional leadership."},
+  {w:"Redolent",pos:"adjective",pr:"/RED-uh-lent/",d:"Strongly reminiscent or suggestive of; having a strong smell.",e:"The old workshop was redolent of sawdust and machine oil, a scent that immediately brought back his apprenticeship."},
+  {w:"Solicitous",pos:"adjective",pr:"/suh-LIS-ih-tus/",d:"Showing interest or concern; eager to do or get something.",e:"The solicitous account manager checked in weekly, not just when a renewal was approaching."},
+  {w:"Tenuous",pos:"adjective",pr:"/TEN-yoo-us/",d:"Very weak or slight; lacking substance.",e:"The connection between the two events was tenuous at best and did not hold up under scrutiny."},
+  {w:"Unequivocal",pos:"adjective",pr:"/un-ih-KWIV-uh-kul/",d:"Leaving no doubt; unambiguous.",e:"Her unequivocal support for the initiative gave the rest of the team the confidence to move forward."},
+  {w:"Veracious",pos:"adjective",pr:"/veh-RAY-shus/",d:"Speaking or representing the truth; truthful.",e:"He was known as a veracious reporter who never overstated a finding to make a headline more compelling."},
+  {w:"Whimsical",pos:"adjective",pr:"/WIM-zih-kul/",d:"Playfully quaint or fanciful, especially in an appealing and amusing way.",e:"The whimsical design of the children's museum made learning feel effortless and fun."},
+  {w:"Xenodochial",pos:"adjective",pr:"/zen-uh-DOH-kee-ul/",d:"Friendly to strangers; hospitable.",e:"The xenodochial culture of the small town made every visitor feel immediately at home."},
+  {w:"Yearn",pos:"verb",pr:"/YURN/",d:"To have an intense feeling of longing for something.",e:"After months on the road, he began to yearn for the routine of home and the quiet of a familiar kitchen."},
+  {w:"Zeal",pos:"noun",pr:"/ZEEL/",d:"Great energy or enthusiasm in pursuit of a cause or an objective.",e:"She brought the same zeal to the final presentation that she had shown on her very first day."},
+  {w:"Astute",pos:"adjective",pr:"/uh-STOOT/",d:"Ability to accurately assess situations or people; shrewd.",e:"The astute negotiator noticed the hesitation and adjusted the offer before it was even requested."},
+  {w:"Buoyant",pos:"adjective",pr:"/BOY-unt/",d:"Inclined to feel cheerful and optimistic; able to stay afloat.",e:"The buoyant team maintained its energy even through the longest weeks of the product launch."},
+  {w:"Candid",pos:"adjective",pr:"/KAN-did/",d:"Truthful and straightforward; frank.",e:"A candid performance review is a gift, even when the feedback is uncomfortable to hear."},
+  {w:"Daunting",pos:"adjective",pr:"/DAWN-ting/",d:"Seeming difficult to deal with in anticipation; intimidating.",e:"The daunting scope of the project became manageable once the team broke it into weekly milestones."},
+  {w:"Effusive",pos:"adjective",pr:"/ih-FYOO-siv/",d:"Expressing feelings of gratitude, pleasure, or approval in an unrestrained or heartfelt manner.",e:"The effusive praise from the client was unexpected but deeply appreciated by the entire team."},
+  {w:"Formidable",pos:"adjective",pr:"/FOR-mih-duh-bul/",d:"Inspiring fear or respect through being impressively large, powerful, intense, or capable.",e:"She was a formidable opponent in any negotiation, arriving more prepared than anyone else at the table."},
+  {w:"Guileless",pos:"adjective",pr:"/GYL-lis/",d:"Free from guile; honest and direct.",e:"His guileless response to the media's questions disarmed a room that had expected a politician's deflections."},
+  {w:"Halcyon",pos:"adjective",pr:"/HAL-see-un/",d:"Denoting a period of time in the past that was idyllically happy and peaceful.",e:"She often spoke of those halcyon days before the company went public, when the team was small and tightly knit."},
+  {w:"Impetuous",pos:"adjective",pr:"/im-PECH-oo-us/",d:"Acting or done quickly without thought or care; impulsive.",e:"His impetuous decision to launch early cost the company two months of damage control."},
+  {w:"Jubilant",pos:"adjective",pr:"/JOO-bih-lunt/",d:"Feeling or expressing great happiness and triumph.",e:"The jubilant team poured into the conference room the moment the acquisition was confirmed."},
+  {w:"Knowledgeable",pos:"adjective",pr:"/NOL-ij-uh-bul/",d:"Intelligent and well-informed; having knowledge.",e:"The knowledgeable consultant answered every question without consulting a single document."},
+  {w:"Laudable",pos:"adjective",pr:"/LAW-duh-bul/",d:"Deserving praise and commendation.",e:"Her laudable commitment to mentoring junior employees set a tone that others eventually followed."},
+  {w:"Malleable",pos:"adjective",pr:"/MAL-ee-uh-bul/",d:"Easily influenced; pliable; adaptable.",e:"The most effective leaders are malleable in their approach, adjusting their style to the needs of each team."},
+  {w:"Nimble",pos:"adjective",pr:"/NIM-bul/",d:"Quick and light in movement or thought; agile.",e:"The nimble startup pivoted its entire product roadmap in under a week after reading the market data."},
+  {w:"Obtuse",pos:"adjective",pr:"/ub-TOOS/",d:"Annoyingly insensitive or slow to understand.",e:"His obtuse response to the complaint made it clear he had not read a single word of the complaint."},
+  {w:"Poignant",pos:"adjective",pr:"/POYN-yunt/",d:"Evoking a keen sense of sadness or regret.",e:"The poignant farewell speech she gave at her retirement reminded everyone what had made working there worthwhile."},
+  {w:"Querulous",pos:"adjective",pr:"/KWER-yuh-lus/",d:"Complaining in a petulant or whining manner.",e:"The querulous tone of the email undermined what was actually a reasonable concern."},
+  {w:"Resolute",pos:"adjective",pr:"/REZ-uh-loot/",d:"Admirably purposeful, determined, and unwavering.",e:"She remained resolute in her position even as the pressure from the board mounted steadily."},
+  {w:"Steadfast",pos:"adjective",pr:"/STED-fast/",d:"Resolutely or dutifully firm and unwavering.",e:"His steadfast loyalty to the organization never wavered, even in its most difficult years."},
+  {w:"Terse",pos:"adjective",pr:"/TERS/",d:"Sparing in the use of words; abrupt.",e:"His terse response to the lengthy memo was a single sentence that settled the entire debate."},
+  {w:"Unwavering",pos:"adjective",pr:"/un-WAY-vur-ing/",d:"Steady or resolute; never faltering.",e:"Her unwavering belief in the team carried everyone through the most difficult phase of the project."},
+  {w:"Venerable",pos:"adjective",pr:"/VEN-ur-uh-bul/",d:"Accorded great respect due to age, wisdom, or character.",e:"The venerable professor had trained three generations of engineers who now ran some of the world's largest firms."},
+  {w:"Wholeheartedly",pos:"adverb",pr:"/hohl-HAR-ted-lee/",d:"With complete sincerity and commitment.",e:"She wholeheartedly endorsed the initiative and put her own credibility behind it from day one."},
+  {w:"Exuberant",pos:"adjective",pr:"/ig-ZOO-bur-unt/",d:"Filled with or characterized by a lively energy and excitement.",e:"The exuberant new hire's enthusiasm was contagious and lifted the mood of the entire floor."},
+  {w:"Yielding",pos:"adjective",pr:"/YEEL-ding/",d:"Ready to give way to arguments, demands, or pressure.",e:"The yielding tone he adopted in the second round of talks opened the door to a resolution that had seemed impossible."},
+  {w:"Zenith",pos:"noun",pr:"/ZEE-nith/",d:"The time at which something is most powerful or successful; the highest point.",e:"The launch of her third company represented the zenith of a career built entirely on calculated risk-taking."},
+  {w:"Amiable",pos:"adjective",pr:"/AY-mee-uh-bul/",d:"Having a friendly and pleasant manner; agreeable.",e:"The amiable new director made every department feel heard during her first month of listening tours."},
+  {w:"Bespoke",pos:"adjective",pr:"/beh-SPOHK/",d:"Made to order; specifically tailored to a particular need or purpose.",e:"They offered a bespoke training program designed around the team's exact skill gaps."},
+  {w:"Clemency",pos:"noun",pr:"/KLEM-en-see/",d:"Mercy and leniency shown toward offenders or enemies; mildness.",e:"The board showed clemency by allowing a performance improvement plan rather than immediate termination."},
+  {w:"Deliberate",pos:"adjective",pr:"/dih-LIB-ur-it/",d:"Done consciously and intentionally; careful and unhurried.",e:"Every word in the announcement had been deliberate, chosen to reassure without making promises that could not be kept."},
+  {w:"Empathy",pos:"noun",pr:"/EM-puh-thee/",d:"The ability to understand and share the feelings of another.",e:"Her empathy for the customer's frustration came through clearly, turning a complaint into a renewal."},
+  {w:"Fidelity",pos:"noun",pr:"/fih-DEL-ih-tee/",d:"Faithfulness to a person, cause, or belief, demonstrated by continued loyalty and support.",e:"The brand's fidelity to its founding principles was exactly why its oldest customers never left."},
+  {w:"Gratuitous",pos:"adjective",pr:"/gruh-TOO-ih-tus/",d:"Uncalled for; lacking good reason; unwarranted.",e:"The gratuitous complexity added to the proposal obscured a genuinely strong recommendation."},
+  {w:"Heedful",pos:"adjective",pr:"/HEED-ful/",d:"Paying attention to advice or warnings.",e:"A heedful leader listens to dissenting opinions before committing to a course of action."},
+  {w:"Impartial",pos:"adjective",pr:"/im-PAR-shul/",d:"Treating all rivals or disputants equally; fair and just.",e:"The impartial mediator helped both sides find common ground without favoring either party."},
+  {w:"Judiciousness",pos:"noun",pr:"/joo-DISH-us-nes/",d:"The quality of having good judgment; wisdom in practical affairs.",e:"The judiciousness she demonstrated in every hiring decision was the foundation of a remarkably cohesive team."},
+  {w:"Kinship",pos:"noun",pr:"/KIN-ship/",d:"A sharing of characteristics or origins; a feeling of being close or connected.",e:"There was an immediate kinship between the two executives who had both started their careers on the shop floor."},
+  {w:"Largesse",pos:"noun",pr:"/lar-ZHES/",d:"Generosity in bestowing money or gifts upon others.",e:"The founder's largesse extended beyond the company to fund scholarships for first-generation college students."},
+  {w:"Meritocracy",pos:"noun",pr:"/mair-ih-TOK-ruh-see/",d:"A system in which advancement is based on individual ability and effort.",e:"She built her department as a true meritocracy, where results always spoke louder than seniority."},
+  {w:"Nexus",pos:"noun",pr:"/NEK-sus/",d:"A connection or series of connections linking two or more things; a central or focus point.",e:"The new campus was designed to be the nexus of collaboration between the research and product teams."},
+  {w:"Onus",pos:"noun",pr:"/OH-nus/",d:"Something that is one's duty or responsibility.",e:"The onus of proof rested entirely with the team that had proposed the change."},
+  {w:"Parity",pos:"noun",pr:"/PAIR-ih-tee/",d:"The state or condition of being equal, especially as it regards status or pay.",e:"Leadership committed to achieving pay parity across all departments within the next two fiscal years."},
+  {w:"Quotidian",pos:"adjective",pr:"/kwoh-TID-ee-un/",d:"Of or occurring every day; ordinary or everyday.",e:"Even the most quotidian tasks were performed with care by a team that took pride in the details."},
+  {w:"Rectitude",pos:"noun",pr:"/REK-tih-tood/",d:"Morally correct behavior or thinking; righteousness.",e:"His rectitude in business dealings made him one of the most trusted figures in the industry."},
+  {w:"Supple",pos:"adjective",pr:"/SUP-ul/",d:"Bending and moving easily and gracefully; adaptable in mind.",e:"A supple thinker, she could pivot between strategic vision and tactical detail with apparent ease."},
+  {w:"Transparency",pos:"noun",pr:"/trans-PAIR-en-see/",d:"Operating in such a way that it is easy for others to see what actions are performed.",e:"The company's transparency about its financials built a level of employee trust that was nearly impossible to replicate."},
+  {w:"Upright",pos:"adjective",pr:"/UP-ryt/",d:"Adhering strictly to moral principles; honest and honorable.",e:"He was described by every colleague as upright, fair, and direct, regardless of the circumstances."},
+  {w:"Valor",pos:"noun",pr:"/VAL-ur/",d:"Great courage in the face of danger, especially in battle or adversity.",e:"The valor of the first responders was recognized with a ceremony attended by the entire city."},
+  {w:"Wholesome",pos:"adjective",pr:"/HOHL-sum/",d:"Conducive to or promoting moral well-being; healthy in mind and body.",e:"The wholesome company culture was built over decades and survived multiple changes in leadership."},
+  {w:"Xenogenesis",pos:"noun",pr:"/zee-noh-JEN-ih-sis/",d:"The supposed production of offspring completely different from either parent; a radical new development.",e:"The merger was described as a xenogenesis for both organizations, producing something entirely new from two very different cultures."},
+  {w:"Yearning",pos:"noun",pr:"/YUR-ning/",d:"A feeling of intense longing for something.",e:"There was an unmistakable yearning in his writing for the kind of meaningful work he had done in the early years of his career."},
+  {w:"Zest",pos:"noun",pr:"/ZEST/",d:"Great enthusiasm and energy; an invigorating quality.",e:"She attacked every project with a zest that made even difficult assignments feel worth pursuing."}
+];
+
+function getDayOfYear(date) {
+  const start = new Date(date.getFullYear(), 0, 0);
+  return Math.floor((date - start) / 86400000);
+}
+function formatDate(date) {
+  return date.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+}
+
+const today = new Date(); today.setHours(0,0,0,0);
+let offset = 0;
+
+function render() {
+  const d = new Date(today); d.setDate(d.getDate() + offset);
+  const day = getDayOfYear(d);
+  const idx = ((day - 1) % words.length + words.length) % words.length;
+  const item = words[idx];
+  document.getElementById('dateLabel').textContent = formatDate(d);
+  document.getElementById('word').textContent = item.w;
+  document.getElementById('pos').textContent = item.pos;
+  document.getElementById('pronunciation').textContent = item.pr;
+  document.getElementById('definition').textContent = item.d;
+  document.getElementById('example').textContent = item.e;
+  document.getElementById('prevBtn').disabled = offset <= -30;
+  document.getElementById('nextBtn').disabled = offset >= 0;
+  const w = document.getElementById('contentWrap');
+  w.style.animation = 'none'; w.offsetHeight; w.style.animation = '';
+}
+
+function changeDay(dir) { offset += dir; render(); }
+render();
+</script>
+</body>
+</html>

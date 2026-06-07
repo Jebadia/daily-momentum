@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Momentum - Horoscope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.sign-picker { display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem; margin-bottom:2.5rem; max-width:640px; }
+.sign-btn { background:none; border:1px solid var(--rule); color:var(--muted); font-family:'Jost',sans-serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; padding:0.45rem 0.85rem; border-radius:2rem; cursor:pointer; transition:all 0.2s; }
+.sign-btn:hover { border-color:var(--accent-dim); color:var(--ink); }
+.sign-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(139,168,136,0.08); }
+.sign-symbol { font-size:2.5rem; text-align:center; margin-bottom:0.5rem; line-height:1; }
+.sign-name { font-family:'Jost',sans-serif; font-size:0.62rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); text-align:center; margin-bottom:2rem; }
+.horoscope-text { font-family:'Cormorant Garamond',serif; font-size:clamp(1.2rem,2.8vw,1.65rem); font-weight:300; line-height:1.65; color:var(--ink); text-align:center; max-width:600px; }
+.aspects { display:flex; gap:2rem; margin-top:2rem; justify-content:center; flex-wrap:wrap; }
+.aspect { text-align:center; }
+.aspect-label { font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); margin-bottom:0.3rem; }
+.aspect-value { font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="top-rule"></div>
+<p class="site-tag">Daily Momentum</p>
+<nav>
+  <a href="index.html" class="nav-link">Motivation</a><span class="nav-sep">|</span>
+  <a href="jokes.html" class="nav-link">Dad Jokes</a><span class="nav-sep">|</span>
+  <a href="vocabulary.html" class="nav-link">Vocabulary</a><span class="nav-sep">|</span>
+  <a href="horoscope.html" class="nav-link active">Horoscope</a><span class="nav-sep">|</span>
+  <a href="riddle.html" class="nav-link">Riddle</a><span class="nav-sep">|</span>
+  <a href="history.html" class="nav-link">This Day</a><span class="nav-sep">|</span>
+  <a href="crossword.html" class="nav-link">Crossword</a><span class="nav-sep">|</span>
+  <a href="sudoku.html" class="nav-link">Sudoku</a>
+</nav>
+<div class="divider"></div>
+<main>
+  <div class="day-nav">
+    <button class="day-nav-btn" id="prevBtn" onclick="changeDay(-1)">&#8592;</button>
+    <span class="date-label" id="dateLabel"></span>
+    <button class="day-nav-btn" id="nextBtn" onclick="changeDay(1)">&#8594;</button>
+  </div>
+  <div class="sign-picker" id="signPicker"></div>
+  <div class="content-wrap" id="contentWrap">
+    <div class="sign-symbol" id="signSymbol"></div>
+    <p class="sign-name" id="signName"></p>
+    <p class="horoscope-text" id="horoscopeText"></p>
+    <div class="aspects">
+      <div class="aspect"><div class="aspect-label">Lucky number</div><div class="aspect-value" id="luckyNum"></div></div>
+      <div class="aspect"><div class="aspect-label">Energy</div><div class="aspect-value" id="energy"></div></div>
+      <div class="aspect"><div class="aspect-label">Focus</div><div class="aspect-value" id="focus"></div></div>
+    </div>
+  </div>
+</main>
+<footer>
+  <a href="https://www.linkedin.com/in/jebbreese/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    Connect on LinkedIn
+  </a>
+</footer>
+<a href="https://paypal.me/jebbreese" class="donate-btn" target="_blank" rel="noopener noreferrer">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+  Buy me a Dutch Bros
+</a>
+<script>
+const signs = [
+  {name:"Aries",sym:"♈",dates:"Mar 21 - Apr 19"},
+  {name:"Taurus",sym:"♉",dates:"Apr 20 - May 20"},
+  {name:"Gemini",sym:"♊",dates:"May 21 - Jun 20"},
+  {name:"Cancer",sym:"♋",dates:"Jun 21 - Jul 22"},
+  {name:"Leo",sym:"♌",dates:"Jul 23 - Aug 22"},
+  {name:"Virgo",sym:"♍",dates:"Aug 23 - Sep 22"},
+  {name:"Libra",sym:"♎",dates:"Sep 23 - Oct 22"},
+  {name:"Scorpio",sym:"♏",dates:"Oct 23 - Nov 21"},
+  {name:"Sagittarius",sym:"♐",dates:"Nov 22 - Dec 21"},
+  {name:"Capricorn",sym:"♑",dates:"Dec 22 - Jan 19"},
+  {name:"Aquarius",sym:"♒",dates:"Jan 20 - Feb 18"},
+  {name:"Pisces",sym:"♓",dates:"Feb 19 - Mar 20"}
+];
+
+const horoscopes = {
+  Aries:[
+    "Your drive is at its peak today. Channel that fire into one goal and watch what becomes possible before the day ends.",
+    "Patience is not your strongest suit, but today it pays off. Wait before you respond, and watch the situation clarify on its own.",
+    "A bold move you have been hesitating on is ready to be made. The timing is better now than it will be next week.",
+    "Your instincts are sharp today. Lead with them, but double-check the details before you commit anything to paper.",
+    "Competition brings out your best. Lean into the challenge in front of you rather than around it.",
+    "Others notice your energy today even when you are not trying. Use that visibility with intention.",
+    "A conversation that felt stalled is ready to move. You have more leverage than you realize.",
+    "Today calls for action, not analysis. You have enough information. Trust yourself and begin.",
+    "An opportunity that seems straightforward may have a hidden layer. Look twice before you leap.",
+    "Your enthusiasm is contagious today. Bring it to the room and watch the team follow.",
+    "Rest is productive. Pushing harder today may cost you more than it gains. Pace yourself.",
+    "A direct approach will resolve something faster than diplomacy. Speak plainly and move on."
+  ],
+  Taurus:[
+    "Slow and steady is your mode today. Others may rush past you, but your careful approach will produce the more lasting result.",
+    "Something you have been building is closer to completion than it feels. Stay the course for just a little longer.",
+    "Your instinct for quality is your greatest asset today. Trust it when someone pressures you to cut corners.",
+    "A financial decision benefits from a second look before you act. The best choice today is the one you make deliberately.",
+    "Comfort is calling, but a small stretch today will yield a satisfaction that comfort never could.",
+    "Your loyalty is one of your most powerful traits. Someone around you is noticing it and taking it seriously.",
+    "A creative block lifts today if you change your environment rather than your approach.",
+    "Stubbornness and persistence look the same from a distance. Make sure you know which one you are practicing.",
+    "The right moment you have been waiting for has arrived. Do not let it pass while you keep preparing.",
+    "Someone values your calm more than your cleverness today. Show up steady and it will matter.",
+    "A practical solution is better than a perfect one. Good enough done is better than ideal undone.",
+    "Your patience today earns you something that urgency never could. Stay the course."
+  ],
+  Gemini:[
+    "Your mind is running at full speed today. Pick one idea and run with it rather than chasing all of them at once.",
+    "A conversation that starts casually may carry real importance. Pay attention to what is said between the lines.",
+    "Your adaptability is your superpower right now. A situation that stumps others is one you can navigate with ease.",
+    "Curiosity takes you somewhere unexpected today. Follow it further than you normally would.",
+    "Two people want different things from you today. You do not have to choose. Find the angle that serves both.",
+    "Your words carry more weight than you realize right now. Choose them carefully, especially in writing.",
+    "A distraction you have been indulging is costing you more than it appears. Redirect that energy.",
+    "Your versatility is being tested today. Show that you can go deep, not just wide.",
+    "An idea you dismissed earlier deserves a second look. Context has shifted in its favor.",
+    "Your social energy opens a door today that logic alone would not. Show up and be present.",
+    "Focus is today's challenge and today's reward. Find it and hold it as long as you can.",
+    "A collaboration that seemed complicated will simplify once both parties are fully honest."
+  ],
+  Cancer:[
+    "Your intuition is ahead of your reasoning today. Pay attention to what you feel before you dismiss it.",
+    "Someone in your circle needs more support than they are asking for. You will know who it is.",
+    "A home or family matter that has been on your mind is ready to be addressed with care and directness.",
+    "Your memory for how things felt serves you well today. Trust your emotional data.",
+    "Protecting what you have built is not the same as being afraid to grow. Know the difference today.",
+    "A boundary you have been reluctant to set is overdue. Setting it gently is still setting it.",
+    "Someone's offhand comment holds more meaning than they let on. Sit with it before you respond.",
+    "Your capacity for empathy is a gift. Do not let it become a burden by absorbing what is not yours to carry.",
+    "A decision made from security will outlast one made from fear. Check your motivation before you act.",
+    "Trust builds slowly and matters deeply to you. Someone is earning yours today, whether you notice it yet or not.",
+    "Your nurturing instinct is an asset in a situation that needs care rather than force.",
+    "A creative project benefits from the personal touch only you can bring to it. Put yourself in it."
+  ],
+  Leo:[
+    "The spotlight finds you today whether you seek it or not. Be ready to represent yourself well.",
+    "Your generosity has a limit and today is a good day to know where it is.",
+    "A leadership opportunity presents itself. You are more ready than you think.",
+    "Your presence in a room changes it. Use that influence with purpose today.",
+    "Someone is watching how you handle a difficulty. Handle it like the person you want to be known as.",
+    "Pride is a strength when it drives excellence. Watch that it does not become the thing that blocks honest feedback.",
+    "Your creativity is at a high point. Give it an outlet before the energy passes.",
+    "A loyal gesture today will be remembered far longer than the effort it costs you.",
+    "You perform best when the stakes are real. Today they are. Show up accordingly.",
+    "Letting someone else take the credit today builds more goodwill than claiming it.",
+    "Your warmth is your most disarming quality. Lead with it in a conversation that needs softening.",
+    "The version of yourself you present publicly should match the one that does the work in private."
+  ],
+  Virgo:[
+    "Your attention to detail catches something today that everyone else walked past. Trust your eye.",
+    "Perfection is slowing down a good result. Release it to done and move forward.",
+    "A system or process you manage has a gap. You already know where it is. Address it now.",
+    "Your analysis is thorough, but at some point the decision must be made. Today is that point.",
+    "Someone benefits from your honest assessment, not your reassurance. Give them what they actually need.",
+    "The quiet work you do consistently is building something substantial. It is further along than it feels.",
+    "A health or routine matter you have been putting off deserves five minutes of attention today.",
+    "You notice things others miss. Today that skill directly helps someone who needed it.",
+    "A plan that looks clean on paper needs a practical stress test. Run it through one before you commit.",
+    "Your standards are high for a reason. Do not lower them just to make someone else more comfortable.",
+    "A small refinement today compounds into a significant improvement over time. Make it.",
+    "Overthinking is analysis past the point of usefulness. You have enough data. Decide."
+  ],
+  Libra:[
+    "A decision you have been weighing is ready to be made. Waiting for perfect balance is not the same as wisdom.",
+    "Harmony in your environment directly affects your output today. Tend to it.",
+    "Someone is asking for your opinion. Give them the honest one, not the diplomatic one.",
+    "Your sense of fairness resolves a tension that has been building for longer than necessary.",
+    "A partnership strengthens today if you bring your real perspective rather than the agreeable one.",
+    "You see both sides clearly, which makes you the right person to guide a difficult conversation.",
+    "Beauty and order in your workspace have a real effect on your thinking today. Invest five minutes in both.",
+    "A compromise is not a loss. A well-crafted one today preserves something important on both sides.",
+    "Your natural diplomacy is needed in a situation that has been handled too bluntly. Step in.",
+    "Indecision costs more than an imperfect decision. Pick a direction and adjust as you go.",
+    "Relationships that feel slightly off balance benefit from a direct, honest check-in rather than avoidance.",
+    "Your aesthetic sense is an asset in a project that needs a sharper presentation. Trust your instincts."
+  ],
+  Scorpio:[
+    "Your instinct about a situation is correct. Gather one more data point before you act on it.",
+    "Intensity is your natural mode. Today it is your advantage, not your liability.",
+    "A truth that has been avoided is ready to be spoken. You are the right person to speak it.",
+    "Your loyalty to the right people today produces something that cannot be bought or manufactured.",
+    "Let go of something you are holding tighter than necessary. The release creates room for something better.",
+    "Your capacity for focus is unmatched when you give yourself permission to use it fully.",
+    "A hidden variable in a situation reveals itself today. You were right to sense it earlier.",
+    "Someone underestimates you today. Let them. Your results will be the only response you need.",
+    "Transformation is uncomfortable and necessary. Lean into the change rather than managing it from a distance.",
+    "Your depth of perception is a gift. Use it to understand, not to judge.",
+    "A strategic move you have been holding in reserve is ready to be made. The timing is now.",
+    "Trust earned slowly is worth more than trust given freely. You know this better than most."
+  ],
+  Sagittarius:[
+    "An adventure you have been imagining is closer to possible than your practical side admits. Look at the actual steps.",
+    "Your optimism is infectious today. Bring it somewhere it is needed.",
+    "A truth you have been softening is better delivered directly. The person can handle it.",
+    "Your broad perspective helps someone who is too close to their problem to see the shape of it.",
+    "Freedom and commitment are not opposites. You can have both if you choose the right structure.",
+    "A new subject catches your attention today. Follow it further than you usually allow yourself to.",
+    "Your honesty is your most valuable quality. Do not trade it for convenience today.",
+    "A journey of some kind begins today, even a small one. Start it.",
+    "Philosophy is useful until it delays action. At some point you have to move. That point is now.",
+    "Your enthusiasm opens a door that caution would have left closed. Walk through it.",
+    "Someone needs your perspective, not your solution. Listen first and see what emerges.",
+    "A belief you have held for a long time is ready to be examined. Question it and see if it holds."
+  ],
+  Capricorn:[
+    "Your long-term thinking is your greatest asset today. Do not let short-term pressure knock you off course.",
+    "An ambition that has felt distant is one consistent effort closer than it was last week.",
+    "Authority is something you earn quietly. Today you earn some of it.",
+    "Discipline in a small matter today reinforces a larger pattern that is working in your favor.",
+    "Recognition may come later than you deserve it, but it will come. Keep the standard high regardless.",
+    "A practical step toward a large goal is worth more than ten strategies about it. Take the step.",
+    "Your credibility is built from reliability. Something you commit to today will be remembered.",
+    "Rest is not weakness. Your most productive version is well-rested, not depleted.",
+    "A structure or system you built is proving its value. Note what works and build on it.",
+    "Someone younger or less experienced needs guidance, not judgment. Give them the first.",
+    "Your patience outlasts the impatience of others. That is a strategic advantage. Use it.",
+    "A responsibility you have been managing alone is ready to be shared. Delegate with confidence."
+  ],
+  Aquarius:[
+    "An unconventional approach to a standard problem works better today than the expected one.",
+    "Your vision of how things could be is worth articulating, even if others are not ready to see it yet.",
+    "Independence is your strength, but collaboration today produces something neither of you could alone.",
+    "A cause you care about benefits from your practical help, not just your belief in it.",
+    "Your objectivity is a gift in a situation where everyone else is emotionally entangled.",
+    "A community or group you are part of needs your honest perspective. Offer it.",
+    "Innovation is not always large. A small, useful improvement today matters just as much.",
+    "Someone challenges your idea today. Engage with the challenge rather than dismissing it.",
+    "Your humanitarian instincts are well-placed. Act on them in a concrete way today.",
+    "The future you imagine is only as useful as the steps you take toward it today.",
+    "Detachment is useful for analysis. Connection is useful for everything else. Know when to use which.",
+    "A technology or tool you have overlooked is worth a second look. It may change your approach."
+  ],
+  Pisces:[
+    "Your intuition picks up something real today. Do not rationalize it away before you examine it.",
+    "Creativity flows especially well right now. Give it a channel and see what comes through.",
+    "A boundary that protects your energy is worth setting even if it disappoints someone.",
+    "Your empathy today heals something in a relationship that logic could not have reached.",
+    "A dream or idea that seems impractical holds a practical seed. Look for it.",
+    "Your sensitivity is not a weakness. In the right moment, it is the only tool that works.",
+    "Someone needs your presence more than your advice today. Just be there.",
+    "A creative project that has stalled moves forward if you approach it from a different angle today.",
+    "Let go of a story you have been telling yourself about how something has to be. It does not.",
+    "Your imagination sees options that others miss entirely. Trust it and share what you see.",
+    "A spiritual or reflective practice grounds you on a day that might otherwise feel scattered.",
+    "Compassion for yourself is as important as compassion for others. Extend it today."
+  ]
+};
+
+const energies = ["Reflective","Driven","Collaborative","Introspective","Bold","Balanced","Creative","Grounded","Expansive","Focused","Restful","Dynamic"];
+const focusAreas = ["Relationships","Career","Finances","Health","Communication","Growth","Creativity","Intuition","Clarity","Leadership","Balance","Purpose"];
+
+function getDayOfYear(date) {
+  const start = new Date(date.getFullYear(), 0, 0);
+  return Math.floor((date - start) / 86400000);
+}
+function formatDate(date) {
+  return date.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric',year:'numeric'});
+}
+function seededRand(seed) {
+  let x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+const today = new Date(); today.setHours(0,0,0,0);
+let offset = 0;
+let selectedSign = localStorage.getItem('dmSign') || 'Aries';
+
+function buildPicker() {
+  const p = document.getElementById('signPicker');
+  p.innerHTML = '';
+  signs.forEach(s => {
+    const b = document.createElement('button');
+    b.className = 'sign-btn' + (s.name === selectedSign ? ' active' : '');
+    b.textContent = s.sym + ' ' + s.name;
+    b.onclick = () => { selectedSign = s.name; localStorage.setItem('dmSign', s.name); buildPicker(); render(); };
+    p.appendChild(b);
+  });
+}
+
+function render() {
+  const d = new Date(today); d.setDate(d.getDate() + offset);
+  const day = getDayOfYear(d);
+  const sign = signs.find(s => s.name === selectedSign);
+  const texts = horoscopes[selectedSign];
+  const idx = ((day - 1) % texts.length + texts.length) % texts.length;
+  const seed = day * 31 + signs.findIndex(s => s.name === selectedSign) * 7;
+  const luckySeed = Math.floor(seededRand(seed) * 99) + 1;
+  const energyIdx = Math.floor(seededRand(seed + 1) * energies.length);
+  const focusIdx = Math.floor(seededRand(seed + 2) * focusAreas.length);
+
+  document.getElementById('dateLabel').textContent = formatDate(d);
+  document.getElementById('signSymbol').textContent = sign.sym;
+  document.getElementById('signName').textContent = sign.name + ' ' + sign.dates;
+  document.getElementById('horoscopeText').textContent = texts[idx];
+  document.getElementById('luckyNum').textContent = luckySeed;
+  document.getElementById('energy').textContent = energies[energyIdx];
+  document.getElementById('focus').textContent = focusAreas[focusIdx];
+  document.getElementById('prevBtn').disabled = offset <= -30;
+  document.getElementById('nextBtn').disabled = offset >= 0;
+  const w = document.getElementById('contentWrap');
+  w.style.animation = 'none'; w.offsetHeight; w.style.animation = '';
+}
+
+function changeDay(dir) { offset += dir; render(); }
+buildPicker();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Momentum - Riddle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.riddle-label { font-size:0.58rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--muted); margin-bottom:1.5rem; text-align:center; }
+.riddle-text { font-family:'Cormorant Garamond',serif; font-size:clamp(1.4rem,3.2vw,2rem); font-weight:300; line-height:1.5; color:var(--ink); text-align:center; max-width:600px; margin-bottom:2.5rem; }
+.answer-wrap { text-align:center; }
+.reveal-btn { background:none; border:1px solid var(--accent-dim); color:var(--muted); font-family:'Jost',sans-serif; font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase; padding:0.65rem 1.6rem; border-radius:2rem; cursor:pointer; transition:all 0.2s; }
+.reveal-btn:hover { border-color:var(--accent); color:var(--accent); }
+.answer-label { font-size:0.55rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--muted); margin-bottom:0.6rem; display:none; }
+.answer-text { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,3vw,1.8rem); font-style:italic; color:var(--accent); display:none; animation:rise 0.6s cubic-bezier(0.22,1,0.36,1) forwards; }
+.answer-text.shown, .answer-label.shown { display:block; }
+</style>
+</head>
+<body>
+<div class="top-rule"></div>
+<p class="site-tag">Daily Momentum</p>
+<nav>
+  <a href="index.html" class="nav-link">Motivation</a><span class="nav-sep">|</span>
+  <a href="jokes.html" class="nav-link">Dad Jokes</a><span class="nav-sep">|</span>
+  <a href="vocabulary.html" class="nav-link">Vocabulary</a><span class="nav-sep">|</span>
+  <a href="horoscope.html" class="nav-link">Horoscope</a><span class="nav-sep">|</span>
+  <a href="riddle.html" class="nav-link active">Riddle</a><span class="nav-sep">|</span>
+  <a href="history.html" class="nav-link">This Day</a><span class="nav-sep">|</span>
+  <a href="crossword.html" class="nav-link">Crossword</a><span class="nav-sep">|</span>
+  <a href="sudoku.html" class="nav-link">Sudoku</a>
+</nav>
+<div class="divider"></div>
+<main>
+  <div class="day-nav">
+    <button class="day-nav-btn" id="prevBtn" onclick="changeDay(-1)">&#8592;</button>
+    <span class="date-label" id="dateLabel"></span>
+    <button class="day-nav-btn" id="nextBtn" onclick="changeDay(1)">&#8594;</button>
+  </div>
+  <div class="content-wrap" id="contentWrap">
+    <p class="riddle-label">Today's riddle</p>
+    <p class="riddle-text" id="riddleText"></p>
+    <div class="answer-wrap">
+      <button class="reveal-btn" id="revealBtn" onclick="revealAnswer()">Reveal the answer</button>
+      <p class="answer-label" id="answerLabel">The answer</p>
+      <p class="answer-text" id="answerText"></p>
+    </div>
+  </div>
+</main>
+<footer>
+  <a href="https://www.linkedin.com/in/jebbreese/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    Connect on LinkedIn
+  </a>
+</footer>
+<a href="https://paypal.me/jebbreese" class="donate-btn" target="_blank" rel="noopener noreferrer">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+  Buy me a Dutch Bros
+</a>
+<script>
+const riddles = [
+  {q:"I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",a:"An echo"},
+  {q:"The more you take, the more you leave behind. What am I?",a:"Footsteps"},
+  {q:"I have cities, but no houses live there. I have mountains, but no trees grow there. I have water, but no fish swim in it. I have roads, but no cars drive on them. What am I?",a:"A map"},
+  {q:"What can you break, even if you never pick it up or touch it?",a:"A promise"},
+  {q:"I am always in front of you but cannot be seen. What am I?",a:"The future"},
+  {q:"What has hands but cannot clap?",a:"A clock"},
+  {q:"The more you have of it, the less you see. What is it?",a:"Darkness"},
+  {q:"I have a head and a tail but no body. What am I?",a:"A coin"},
+  {q:"What gets wetter the more it dries?",a:"A towel"},
+  {q:"I can fly without wings, cry without eyes. Wherever I go, darkness follows me. What am I?",a:"A cloud"},
+  {q:"What has teeth but cannot bite?",a:"A comb"},
+  {q:"I am taken from a mine and shut up in a wooden case. I am never released, and yet I am used by almost everyone. What am I?",a:"A pencil"},
+  {q:"What can run but never walks, has a mouth but never talks, has a head but never weeps, has a bed but never sleeps?",a:"A river"},
+  {q:"The person who makes it does not need it. The person who buys it does not use it. The person who uses it does not know they are using it. What is it?",a:"A coffin"},
+  {q:"I have no life, but I can die. What am I?",a:"A battery"},
+  {q:"What is full of holes but still holds water?",a:"A sponge"},
+  {q:"What is always coming but never arrives?",a:"Tomorrow"},
+  {q:"The more you take away from me, the bigger I become. What am I?",a:"A hole"},
+  {q:"What has one eye but cannot see?",a:"A needle"},
+  {q:"I turn once, what is out will not get in. I turn again, what is in will not get out. What am I?",a:"A key"},
+  {q:"What can you catch but not throw?",a:"A cold"},
+  {q:"I am light as a feather, yet the strongest person cannot hold me for more than a few minutes. What am I?",a:"Breath"},
+  {q:"What goes up but never comes back down?",a:"Your age"},
+  {q:"What has four legs in the morning, two in the afternoon, and three in the evening?",a:"A human being, across the stages of life"},
+  {q:"What tastes better than it smells?",a:"A tongue"},
+  {q:"The more you feed it, the more it grows. Give it water and it dies. What is it?",a:"Fire"},
+  {q:"What is so fragile that saying its name breaks it?",a:"Silence"},
+  {q:"I am an odd number. Take away a letter and I become even. What number am I?",a:"Seven"},
+  {q:"What word becomes shorter when you add two letters to it?",a:"Short"},
+  {q:"What comes once in a minute, twice in a moment, but never in a thousand years?",a:"The letter M"},
+  {q:"I have no wings but I can fly. I have no eyes but I can cry. What am I?",a:"A cloud"},
+  {q:"What building has the most stories?",a:"A library"},
+  {q:"Forward I am heavy. Backward I am not. What am I?",a:"A ton"},
+  {q:"What can you hold in your right hand but never in your left hand?",a:"Your left hand"},
+  {q:"What goes up and down but never moves?",a:"A staircase"},
+  {q:"I am not alive, but I grow. I have no lungs, but I need air. I have no mouth, but water kills me. What am I?",a:"Fire"},
+  {q:"What is seen in the middle of March and April that cannot be seen at the beginning or end of either month?",a:"The letter R"},
+  {q:"What can fill a room but takes up no space?",a:"Light"},
+  {q:"What is always in front of you but cannot be seen?",a:"The future"},
+  {q:"A man walks into a room with a match. The room has a fireplace, an oil lamp, and a candle. Which does he light first?",a:"The match"},
+  {q:"What has a bottom at the top?",a:"Your legs"},
+  {q:"I have keys but no locks. I have space but no room. You can enter but cannot go inside. What am I?",a:"A keyboard"},
+  {q:"What runs all around a backyard, yet never moves?",a:"A fence"},
+  {q:"What has a neck but no head?",a:"A bottle"},
+  {q:"What is always answered without being asked a question?",a:"A doorbell"},
+  {q:"I go in hard, come out soft, and you blow me. What am I?",a:"Chewing gum"},
+  {q:"I have branches but no fruit, no trunk, and no leaves. What am I?",a:"A bank"},
+  {q:"What is black when you buy it, red when you use it, and gray when you throw it away?",a:"Charcoal"},
+  {q:"I have a thousand needles but I do not sew. What am I?",a:"A porcupine"},
+  {q:"What is it that you must give before you can keep it?",a:"Your word"},
+  {q:"What begins with T, ends with T, and has T in it?",a:"A teapot"},
+  {q:"What is it that lives if it is fed, and dies if you give it a drink?",a:"Fire"},
+  {q:"A cowboy rode into town on Friday, stayed three days, and rode out on Friday. How?",a:"His horse's name was Friday"},
+  {q:"What question can you never answer yes to honestly?",a:"Are you asleep?"},
+  {q:"What has words but never speaks?",a:"A book"},
+  {q:"What is harder to catch the faster you run?",a:"Your breath"},
+  {q:"What do you bury when it is alive and dig up when it is dead?",a:"A plant"},
+  {q:"I have lakes with no water, mountains with no stone, and cities with no buildings. What am I?",a:"A map"},
+  {q:"What invention lets you look right through a wall?",a:"A window"},
+  {q:"What is it the more you take, the more you leave behind?",a:"Footsteps"},
+  {q:"What walks on four legs in the morning, two at noon, and three at night?",a:"A human being"},
+  {q:"What is too much for one, enough for two, and nothing for three?",a:"A secret"},
+  {q:"I am the beginning of the end, the end of every place. I am the beginning of eternity, the end of time and space. What am I?",a:"The letter E"},
+  {q:"What gets bigger every time you take from it?",a:"A hole"},
+  {q:"What can you keep after giving it to someone else?",a:"Your word"},
+  {q:"I look flat but I am deep, hidden in chambers, stripping color from everything I see. What am I?",a:"A shadow"},
+  {q:"What starts with E, ends with E, and only has one letter in it?",a:"An envelope"},
+  {q:"What is at the end of a rainbow?",a:"The letter W"},
+  {q:"What word is spelled incorrectly in every single dictionary?",a:"Incorrectly"},
+  {q:"What kind of room has no doors or windows?",a:"A mushroom"},
+  {q:"David's father has three sons: Snap, Crackle, and who?",a:"David"},
+  {q:"What is the next letter in this sequence: J F M A M J J A S O N?",a:"D, for December"},
+  {q:"If you have me, you want to share me. If you share me, you no longer have me. What am I?",a:"A secret"},
+  {q:"What has four wheels and flies?",a:"A garbage truck"},
+  {q:"What do you call a bear with no teeth?",a:"A gummy bear"},
+  {q:"I am not a ghost, but I can walk through walls. What am I?",a:"A shadow"},
+  {q:"What can you hold without using your hands?",a:"Your breath"},
+  {q:"What belongs to you but other people use it more than you do?",a:"Your name"},
+  {q:"What is orange and sounds like a parrot?",a:"A carrot"},
+  {q:"What do you throw out when you want to use it, and take in when you do not want to use it?",a:"An anchor"},
+  {q:"If two is company and three is a crowd, what are four and five?",a:"Nine"},
+  {q:"What do you call it when your parachute does not open?",a:"Jumping to a conclusion"},
+  {q:"What jumps when it walks and sits when it stands?",a:"A kangaroo"},
+  {q:"What can travel around the world while staying in a corner?",a:"A stamp"},
+  {q:"What gets sharper the more you use it?",a:"Your mind"},
+  {q:"I am not alive but I can grow. I do not have lungs but I need air. What am I?",a:"Fire"},
+  {q:"What has many keys but cannot open a single lock?",a:"A piano"},
+  {q:"What do you put in a barrel to make it lighter?",a:"A hole"},
+  {q:"You see a house with two doors. One leads to certain death, one to freedom. There are two guards: one always lies, one always tells the truth. You get one question to ask one guard. What do you ask?",a:"Ask either guard: which door would the other guard say leads to freedom? Then take the opposite door."},
+  {q:"What number do you get when you multiply all the numbers on a telephone keypad?",a:"Zero, because of the zero key"},
+  {q:"I start with M, end with X, and have never in it. What am I?",a:"Mailbox"},
+  {q:"What kind of coat is best put on wet?",a:"A coat of paint"},
+  {q:"What can you lose but not find again?",a:"Time"},
+  {q:"What is full during the day and empty at night?",a:"A shoe"},
+  {q:"I am a word of letters three. Add two and fewer there will be. What am I?",a:"Few"},
+  {q:"A woman shoots her husband. Then she holds him underwater for over five minutes. A little while later, they go to dinner together. How?",a:"She took his photograph and developed it in a darkroom"},
+  {q:"What is seen in the water and in the sky, is everywhere yet nowhere, and has no weight?",a:"A reflection"},
+  {q:"How far can a dog run into the woods?",a:"Halfway, then it is running out"},
+  {q:"What has one head, one foot, and four legs?",a:"A bed"},
+  {q:"What goes through cities and fields, over mountains and under water, but never moves?",a:"A road"},
+  {q:"I am the only thing that always tells the truth. I show off everything that I see. I come in all shapes and sizes. What am I?",a:"A mirror"},
+  {q:"What runs but has no legs, mouth, but never talks, and a bed but never sleeps?",a:"A river"},
+  {q:"What has a face and two hands but no arms or legs?",a:"A clock"},
+  {q:"What gets broken without being held?",a:"A promise"},
+  {q:"I can be cracked, made, told, and played. What am I?",a:"A joke"},
+  {q:"What is yours but your friends use it more than you do?",a:"Your name"},
+  {q:"What five letter word stays the same when you take away the first, third, and last letter?",a:"Empty"},
+  {q:"What has many teeth but cannot bite?",a:"A zipper"},
+  {q:"What do you answer every day but it never asks you a question?",a:"Your phone"},
+  {q:"What is the longest word in the dictionary?",a:"Smiles, because there is a mile between each S"},
+  {q:"What three consecutive days of the week start with the letter T?",a:"Tuesday, Thursday, Today"},
+  {q:"If I have it, I do not share it. If I share it, I do not have it. What is it?",a:"A secret"},
+  {q:"What two things can you never eat for breakfast?",a:"Lunch and dinner"},
+  {q:"A truck driver is going the wrong way down a one-way street. A police officer sees him but does nothing. Why?",a:"The truck driver was walking"},
+  {q:"What can you make that no one, not even you, can see?",a:"Noise"},
+  {q:"The more you remove from me, the larger I get. What am I?",a:"A hole"},
+  {q:"What starts with an E but only has one letter?",a:"An envelope"},
+  {q:"I have no beginning, middle, or end. What am I?",a:"A circle"},
+  {q:"What is it that no man ever yet did see, which never was, but always is to be?",a:"Tomorrow"},
+  {q:"I am always hungry and must always be fed. The finger I lick will soon turn red. What am I?",a:"Fire"},
+  {q:"What can go up a chimney down, but not down a chimney up?",a:"An umbrella"},
+  {q:"A man is found dead in the desert with a pack on his back. What happened?",a:"His parachute did not open"},
+  {q:"The more of me there is, the less you see. What am I?",a:"Fog"},
+  {q:"What is as big as an elephant but weighs absolutely nothing?",a:"An elephant's shadow"},
+  {q:"What begins and has no end, and is the ending of all that begins?",a:"Death"},
+  {q:"What kind of tree can you carry in your hand?",a:"A palm"},
+  {q:"What goes around and around the wood but never goes into the wood?",a:"The bark of a tree"},
+  {q:"What is brown and sticky?",a:"A stick"},
+  {q:"I have no eyes, no ears, no mouth, and no nose, but I can smell trouble from miles away. What am I?",a:"A skunk"},
+  {q:"What month has 28 days?",a:"All of them"},
+  {q:"What can you serve but never eat?",a:"A tennis ball"},
+  {q:"What is bought by the yard and worn by the foot?",a:"Carpet"},
+  {q:"You see me once in June, twice in November, and not at all in May. What am I?",a:"The letter E"},
+  {q:"What comes down but never goes up?",a:"Rain"},
+  {q:"What is the center of gravity?",a:"The letter V"},
+  {q:"What kind of ship has two mates but no captain?",a:"A courtship"},
+  {q:"What word contains all twenty-six letters?",a:"Alphabet"},
+  {q:"What can be swallowed, but can also swallow you?",a:"Pride"},
+  {q:"The eight of us go forth not back to protect our king from a foe's attack. What are we?",a:"Chess pawns"},
+  {q:"I am always there, something just beyond your reach, but take one step toward me and I retreat. What am I?",a:"The horizon"},
+  {q:"Name the most recent year in which New Year's came before Christmas.",a:"Every year, New Year's Day is January 1 and Christmas is December 25"},
+  {q:"A woman has five daughters. Each daughter has one brother. How many children does the woman have?",a:"Six, five daughters and one brother shared by all"},
+  {q:"What runs around the whole yard without moving?",a:"A fence"},
+  {q:"What flies without wings, leaves without ever going, and sees without eyes?",a:"Time"},
+  {q:"What is put on a table, cut, but never eaten?",a:"A deck of cards"},
+  {q:"What word in the English language is always spelled incorrectly?",a:"Incorrectly"},
+  {q:"Where does Friday come before Thursday?",a:"In the dictionary"},
+  {q:"What is the only English word that ends in the letters MT?",a:"Dreamt"},
+  {q:"What breaks but never falls, and falls but never breaks?",a:"Day and night"}
+];
+
+function getDayOfYear(date) {
+  const start = new Date(date.getFullYear(), 0, 0);
+  return Math.floor((date - start) / 86400000);
+}
+function formatDate(date) {
+  return date.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric',year:'numeric'});
+}
+
+const today = new Date(); today.setHours(0,0,0,0);
+let offset = 0;
+
+function render() {
+  const d = new Date(today); d.setDate(d.getDate() + offset);
+  const day = getDayOfYear(d);
+  const idx = ((day - 1) % riddles.length + riddles.length) % riddles.length;
+  document.getElementById('dateLabel').textContent = formatDate(d);
+  document.getElementById('riddleText').textContent = riddles[idx].q;
+  document.getElementById('answerText').textContent = riddles[idx].a;
+  document.getElementById('answerText').classList.remove('shown');
+  document.getElementById('answerLabel').classList.remove('shown');
+  document.getElementById('revealBtn').style.display = 'inline-block';
+  document.getElementById('prevBtn').disabled = offset <= -30;
+  document.getElementById('nextBtn').disabled = offset >= 0;
+  const w = document.getElementById('contentWrap');
+  w.style.animation = 'none'; w.offsetHeight; w.style.animation = '';
+}
+
+function revealAnswer() {
+  document.getElementById('revealBtn').style.display = 'none';
+  document.getElementById('answerLabel').classList.add('shown');
+  document.getElementById('answerText').classList.add('shown');
+}
+
+function changeDay(dir) { offset += dir; render(); }
+render();
+</script>
+</body>
+</html>
