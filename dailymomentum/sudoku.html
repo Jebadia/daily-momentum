@@ -29,6 +29,13 @@
 .action-btn:hover { border-color:var(--accent-dim); color:var(--ink); }
 .status-msg { font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); min-height:1.2em; }
 .status-msg.win { color:var(--accent); }
+
+@media (max-width: 600px) {
+  .sudoku-grid { width: min(100%, 300px); }
+  .numpad { width: min(100%, 300px); }
+  .game-controls { gap: 0.5rem; }
+  .diff-btn { font-size: 0.52rem; padding: 0.35rem 0.7rem; }
+}
 </style>
 </head>
 <body>
@@ -251,5 +258,6 @@ document.getElementById('nextBtn').disabled = true;
 buildNumpad();
 buildGame();
 </script>
+<a href="about.html" class="about-link">About</a>
 </body>
 </html>

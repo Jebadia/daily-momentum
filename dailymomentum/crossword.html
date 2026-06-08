@@ -33,6 +33,14 @@
 .status-msg{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:0.6rem;min-height:1.2em;text-align:center;font-family:'Jost',sans-serif}
 .status-msg.win{color:var(--accent)}
 #cwCap{position:fixed;opacity:0;pointer-events:none;width:1px;height:1px;top:0;left:0}
+
+@media (max-width: 600px) {
+  .crossword-wrap { gap: 1rem; }
+  .cw-grid { grid-template-columns: repeat(5, 36px); grid-template-rows: repeat(5, 36px); }
+  .cw-cell { width: 36px; height: 36px; }
+  .cw-letter { font-size: 0.9rem; }
+  .clues-area { max-width: 100%; min-width: 0; width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -573,5 +581,6 @@ document.getElementById('prevBtn').disabled=false;
 document.getElementById('nextBtn').disabled=true;
 loadPuzzle();
 </script>
+<a href="about.html" class="about-link">About</a>
 </body>
 </html>

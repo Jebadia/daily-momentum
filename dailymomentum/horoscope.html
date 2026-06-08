@@ -20,6 +20,13 @@
 .aspect { text-align:center; }
 .aspect-label { font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); margin-bottom:0.3rem; }
 .aspect-value { font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--accent); }
+
+@media (max-width: 600px) {
+  .sign-btn { font-size: 0.52rem; padding: 0.35rem 0.65rem; }
+  .sign-symbol { font-size: 2rem; }
+  .horoscope-text { font-size: 1.1rem; }
+  .aspects { gap: 1rem; }
+}
 </style>
 </head>
 <body>
@@ -310,5 +317,6 @@ function changeDay(dir) { offset += dir; render(); }
 buildPicker();
 render();
 </script>
+<a href="about.html" class="about-link">About</a>
 </body>
 </html>
